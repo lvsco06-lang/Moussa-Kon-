@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Notes & Bulletins | École Privée Moussa Koné</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .notes-wrap { max-width: 1000px; margin: 0 auto; padding: 20px; font-family: 'Inter', sans-serif; }
+        .controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+        .trim-tabs { display: inline-flex; background: #eef2ef; border-radius: 10px; padding: 4px; gap: 4px; }
+        .trim-tabs button { border: none; background: transparent; padding: 8px 16px; border-radius: 8px; font-weight: 600; cursor: pointer; color: #4b5563; font-size: .9rem; }
+        .trim-tabs button.active { background: #795548; color: #fff; }
+        .right-controls { display: flex; gap: 10px; align-items: center; }
+        .student-switch select { padding: 9px 12px; border: 1.5px solid #d1d5db; border-radius: 10px; font-size: .92rem; background: #fff; }
+        .btn-print { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; background: #795548; color: #fff; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: .92rem; }
+        .btn-print:hover { background: #256628; }
+        .empty-state { text-align: center; padding: 60px 20px; color: #6b7280; }
+        .empty-state i { font-size: 3rem; color: #d1d5db; margin-bottom: 12px; }
+
+        /* ===== FEUILLE A4 ===== */
+        .sheet { width: 210mm; min-height: 297mm; margin: 0 auto; background: #fff; color: #1f2937; box-shadow: 0 6px 30px rgba(0,0,0,.12); padding: 11mm 11mm 9mm; font-size: 10pt; line-height: 1.3; box-sizing: border-box; }
+
+        .b-header { display: flex; align-items: stretch; border: 2px solid #5D4037; border-radius: 6px; overflow: hidden; }
+        .b-header .crest { background: #5D4037; color: #fff; padding: 8px 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 84px; }
+        .b-header .crest .logo { width: 42px; height: 42px; border-radius: 50%; background: #fff; color: #5D4037; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem; margin-bottom: 3px; }
+        .b-header .crest small { font-size: 7pt; opacity: .9; }
+        .b-header .ident { flex: 1; padding: 7px 12px; }
+        .b-header .ident h1 { margin: 0; font-size: 13.5pt; font-weight: 800; color: #5D4037; }
+        .b-header .ident .sub { font-size: 8pt; color: #444; margin-top: 2px; }
+        .b-header .ident .agree { display: inline-block; margin-top: 4px; font-size: 7pt; color: #5D4037; border: 1px solid #5D4037; border-radius: 4px; padding: 1px 6px; font-weight: 600; }
+        .b-header .doc { background: #f1f8f2; padding: 7px 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-left: 1px solid #cfe3d2; min-width: 128px; }
+        .b-header .doc .t { font-size: 10pt; font-weight: 800; color: #5D4037; }
+        .b-header .doc .y { font-size: 7.5pt; color: #555; margin-top: 2px; text-align: center; }
+
+        .b-student { display: flex; gap: 14px; align-items: center; margin-top: 7px; padding: 7px 12px; border: 1.5px solid #e5e7eb; border-radius: 6px; background: linear-gradient(135deg,#fbfdfb,#f3f8f4); }
+        .b-photo { width: 64px; height: 80px; object-fit: cover; border-radius: 5px; border: 2px solid #fff; box-shadow: 0 1px 5px rgba(0,0,0,.2); flex-shrink: 0; background: #eef; }
+        .b-photo-fb { width: 64px; height: 80px; border-radius: 5px; border: 2px solid #cfe3d2; background: #e8f1e9; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.4rem; color: #5D4037; flex-shrink: 0; }
+        .b-fields { flex: 1; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 2px 16px; }
+        .b-fields .f .k { color: #6b7280; font-size: 7.5pt; text-transform: uppercase; letter-spacing: .03em; }
+        .b-fields .f .v { font-weight: 600; color: #1f2937; font-size: 9.5pt; }
+
+        table.grades { width: 100%; border-collapse: collapse; margin-top: 7px; }
+        table.grades th { background: #5D4037; color: #fff; font-size: 7.5pt; text-transform: uppercase; padding: 5px 5px; text-align: center; }
+        table.grades th.left { text-align: left; }
+        table.grades td { padding: 4px 5px; border-bottom: 1px solid #eef0f2; font-size: 9pt; text-align: center; }
+        table.grades td.subj { text-align: left; font-weight: 600; }
+        table.grades tr:nth-child(even) td { background: #fafbfa; }
+        table.grades td.moy { font-weight: 800; }
+        table.grades tfoot td { background: #f1f8f2; font-weight: 700; border-top: 2px solid #5D4037; font-size: 9pt; }
+        .appr { font-size: 8pt; text-align: left; }
+
+        .b-summary { display: flex; gap: 9px; margin-top: 9px; }
+        .b-summary .cell { flex: 1; border: 1.5px solid #e5e7eb; border-radius: 6px; padding: 7px; text-align: center; }
+        .b-summary .cell .val { font-size: 1.35rem; font-weight: 800; color: #5D4037; line-height: 1; }
+        .b-summary .cell .lbl { font-size: 7pt; color: #6b7280; text-transform: uppercase; margin-top: 3px; }
+        .mention-pill { display: inline-block; padding: 2px 11px; border-radius: 999px; font-weight: 700; font-size: 10.5pt; }
+
+        .b-appreciation { margin-top: 8px; border: 1.5px solid #e5e7eb; border-radius: 6px; padding: 7px 12px; }
+        .b-appreciation .k { font-size: 7.5pt; text-transform: uppercase; color: #5D4037; font-weight: 700; }
+        .b-appreciation .v { font-size: 9.5pt; color: #374151; margin-top: 2px; }
+
+        .b-sigs { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 12px; }
+        .b-sig { text-align: center; }
+        .b-sig .line { border-bottom: 1.5px solid #374151; padding-bottom: 22px; }
+        .b-sig .lbl { font-size: 7.5pt; font-weight: 700; color: #374151; margin-top: 4px; }
+        .b-foot { margin-top: 9px; text-align: center; font-size: 7pt; color: #9ca3af; }
+
+        @media (max-width: 980px) {
+            .sheet { width: 100%; min-height: auto; padding: 16px; }
+            .b-fields { grid-template-columns: 1fr 1fr; }
+            .b-header { flex-wrap: wrap; }
+            table.grades { font-size: 8pt; }
+        }
+        /* Bulletin sur telephone : la mise en page PC est conservee
+           telle quelle, seulement reduite pour tenir a l'ecran. */
+        .sheet-scaler { width: 100%; }
+        @media (max-width: 900px) {
+            .sheet-scaler { overflow: hidden; }
+            .sheet { width: 794px; transform-origin: top left; }
+            .notes-wrap { padding: 14px 10px 40px; }
+        }
+
+        @media print {
+            @page { size: A4 portrait; margin: 8mm; }
+            .header, .footer, .controls, .mobile-nav { display: none !important; }
+            body { background: #fff; }
+            .notes-wrap { max-width: none; padding: 0; }
+            .sheet { width: auto; min-height: auto; box-shadow: none; padding: 0; }
+            .b-student, .b-summary .cell, .b-photo { box-shadow: none !important; }
+            /* Garder la grille d'identité sur 3 colonnes à l'impression */
+            .b-fields { grid-template-columns: 1fr 1fr 1fr !important; }
+            .b-header .crest, table.grades th, table.grades tfoot td { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .b-student, table.grades, .b-summary, .b-appreciation, .b-sigs { page-break-inside: avoid; }
+            .sheet-scaler { overflow: visible !important; height: auto !important; }
+            .sheet { width: auto !important; transform: none !important; }
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --green-900:#3E2723; --green-800:#4E342E; --green-700:#5D4037;
+            --green-600:#795548; --gold:#c79a3b; --gold-soft:#e6c976; --gold-deep:#a97f28;
+            --brick:#9c4a2e; --ink:#15241c; --muted:#59685d; --line:#e7e3d6;
+            --paper:#fbfaf4; --paper-2:#f4f1e6;
+            --radius:16px; --radius-sm:11px; --radius-pill:999px;
+            --shadow-sm:0 1px 2px rgba(20,40,30,.05),0 2px 6px rgba(20,40,30,.05);
+            --shadow:0 14px 34px -16px rgba(62,39,35,.22);
+            --maxw:1180px;
+            --fdisplay:'Fraunces',Georgia,serif;
+            --fbody:'Inter',system-ui,sans-serif;
+        }
+        *{margin:0;padding:0;box-sizing:border-box;min-width:0}
+        html,body{overflow-x:hidden;max-width:100%}
+        body{font-family:var(--fbody);color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+        a{color:inherit;text-decoration:none}
+        ::selection{background:var(--gold-soft);color:var(--green-900)}
+        :focus-visible{outline:2.5px solid var(--gold-deep);outline-offset:3px;border-radius:4px}
+
+        .mud{height:14px;background-repeat:repeat-x;background-size:34px 14px;opacity:.9;
+            background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='14' viewBox='0 0 34 14'%3E%3Cg fill='none' stroke='%23c79a3b' stroke-width='1.2'%3E%3Cpath d='M0 7h34'/%3E%3Cpath d='M17 2l4 5-4 5-4-5z'/%3E%3Ccircle cx='4' cy='7' r='1.4' fill='%23c79a3b' stroke='none'/%3E%3Ccircle cx='30' cy='7' r='1.4' fill='%23c79a3b' stroke='none'/%3E%3C/g%3E%3C/svg%3E");}
+
+        .header{position:sticky;top:0;z-index:1000;background:rgba(251,250,244,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+        .navbar{max-width:var(--maxw);margin:0 auto}
+        .nav-container{display:flex;align-items:center;gap:16px;padding:.8rem 24px}
+        .logo-container{display:flex;align-items:center;gap:11px;flex-shrink:0}
+        .logo-img{height:44px;width:auto}
+        .logo-fallback{display:flex;align-items:center;gap:11px}
+        .logo-circle{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:var(--fdisplay);font-weight:600;font-size:.72rem;color:var(--gold-soft);letter-spacing:.4px;background:radial-gradient(circle at 30% 25%,var(--green-600),var(--green-800));box-shadow:inset 0 0 0 2px rgba(199,154,59,.55)}
+        .logo-text{display:flex;flex-direction:column;line-height:1.15}
+        .logo-main{font-family:var(--fdisplay);font-weight:600;font-size:1rem;color:var(--green-800)}
+        .logo-sub{font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);font-weight:600}
+        .nav-links{list-style:none;display:flex;align-items:center;gap:2px;margin-left:auto;flex-shrink:0}
+        .nav-links a{display:inline-block;padding:.5rem .75rem;border-radius:var(--radius-pill);font-size:.9rem;font-weight:500;transition:.2s;white-space:nowrap;flex-shrink:0}
+        .nav-links a:hover{color:var(--green-700);background:rgba(46,125,50,.08)}
+        .nav-links a.active{color:var(--green-700);background:rgba(46,125,50,.12);font-weight:600}
+        .user-menu{display:flex;align-items:center;gap:11px;margin-left:12px;padding-left:14px;border-left:1px solid var(--line);flex-shrink:0}
+        .user-name{font-size:.86rem;font-weight:600;color:var(--green-800);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .user-avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:.78rem;font-weight:700;color:#fff;background:linear-gradient(150deg,var(--gold),var(--gold-deep));flex-shrink:0}
+        .logout-btn{border:1.5px solid rgba(156,74,46,.4);background:none;color:var(--brick);font-family:inherit;font-size:.78rem;font-weight:600;padding:.42rem .85rem;border-radius:var(--radius-pill);cursor:pointer;transition:.2s;white-space:nowrap}
+        .logout-btn:hover{background:var(--brick);color:#fff}
+        .mobile-menu-btn{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;margin-left:auto}
+        .mobile-menu-btn span{width:24px;height:2.5px;background:var(--green-800);border-radius:2px}
+        .mobile-nav{display:none;flex-direction:column;background:#fff;border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+        .mobile-nav.active{display:flex}
+        .mobile-nav a{padding:.9rem 24px;border-bottom:1px solid var(--paper-2);font-size:.94rem;font-weight:500}
+        .mobile-nav a.active{color:var(--green-700);background:rgba(46,125,50,.06);font-weight:600}
+
+        .portal-hero{background:radial-gradient(800px 400px at 85% 0%,rgba(199,154,59,.18),transparent 60%),linear-gradient(160deg,var(--green-700),var(--green-900));color:#fff}
+        .portal-hero .ph-inner{max-width:var(--maxw);margin:0 auto;padding:38px 24px 34px}
+        .portal-hero h1{font-family:var(--fdisplay);font-weight:500;font-size:clamp(1.6rem,3.2vw,2.3rem);line-height:1.1;margin-bottom:.3rem}
+        .portal-hero h1 i{color:var(--gold-soft);font-size:.85em;margin-right:.35rem}
+        .portal-hero p{color:rgba(255,255,255,.8);font-size:.96rem}
+
+        .footer{background:var(--green-900);color:rgba(255,255,255,.75);padding:38px 0 0;margin-top:30px}
+        .footer .container,.footer-content{max-width:var(--maxw);margin:0 auto}
+        .footer-content{padding:0 24px 26px;display:grid;grid-template-columns:1fr;gap:26px}
+        .footer h3{font-family:var(--fdisplay);color:#fff;font-size:1.05rem;font-weight:600;margin-bottom:.7rem}
+        .footer p{font-size:.9rem;margin-bottom:.4rem}
+        .footer p i{color:var(--gold);width:16px;text-align:center;margin-right:.4rem}
+        .footer a:hover{color:var(--gold-soft)}
+        .footer-bottom{border-top:1px solid rgba(255,255,255,.12);padding:16px 24px;text-align:center;font-size:.84rem;color:rgba(255,255,255,.6)}
+
+        @media (max-width:1280px){
+            .nav-links,.user-menu{display:none}
+            .mobile-menu-btn{display:flex}
+        }
+        @media (max-width:560px){
+            .nav-container{padding:.7rem 16px}
+            .portal-hero .ph-inner{padding:26px 16px 24px}
+        }
+        @media print{
+            .portal-hero,.mud,.mobile-menu-btn{display:none!important}
+        }
+        @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+    </style>
+
+    <style>
+        /* Contrôles en charte (surclasse le style local, pas le bulletin A4) */
+        .trim-tabs{background:var(--paper-2);border-radius:999px;padding:4px}
+        .trim-tabs button{border-radius:999px;color:var(--muted);font-family:inherit}
+        .trim-tabs button.active{background:var(--green-700)}
+        .btn-print{background:var(--gold-deep);border-radius:999px;font-family:inherit;box-shadow:0 10px 22px -12px rgba(169,127,40,.8)}
+        .btn-print:hover{background:#95701f}
+        .student-switch select{border-radius:999px;font-family:inherit;background:var(--paper);border-color:var(--line)}
+        .notes-wrap{font-family:var(--fbody)}
+        @media (max-width:560px){
+            .controls{flex-direction:column;align-items:stretch}
+            .right-controls{flex-direction:column;align-items:stretch}
+            .trim-tabs{width:100%;justify-content:space-between}
+            .trim-tabs button{flex:1}
+            .btn-print{justify-content:center}
+            .student-switch select{width:100%}
+        }
+    </style>
+</head>
+<body class="notes-body">
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo-container">
+                    <img src="../images/logo.png" alt="Logo EPMK" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+                    <div class="logo-fallback" style="display:none;">
+                        <div class="logo-circle">EPMK</div>
+                        <div class="logo-text"><span class="logo-main">Moussa Koné</span><span class="logo-sub">Portail Parents</span></div>
+                    </div>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Accueil</a></li>
+                    <li><a href="portal-dashboard.html">Tableau de Bord</a></li>
+                    <li><a href="portal-notes.html" class="active">Notes & Bulletins</a></li>
+                    <li><a href="portal-paiements.html">Paiements</a></li>
+                    <li><a href="portal-absences.html">Absences</a></li>
+                    <li><a href="portal-messagerie.html">Annonces</a></li>
+                </ul>
+                <div class="user-menu">
+                    <span class="user-name" id="parentNameDisplay">Chargement...</span>
+                    <div class="user-avatar" id="parentAvatar" style="overflow:hidden;position:relative;">
+                        <img id="avatarImg" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:none;border-radius:50%;">
+                        <span id="avatarInitials">PP</span>
+                    </div>
+                    <button class="logout-btn" onclick="logoutParent()">Déconnexion</button>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn"><span></span><span></span><span></span></button>
+            </div>
+            <div class="mobile-nav" id="mobileNav">
+                <a href="../index.html">Accueil</a>
+                <a href="portal-dashboard.html">Tableau de Bord</a>
+                <a href="portal-notes.html" class="active">Notes & Bulletins</a>
+                <a href="portal-paiements.html">Paiements</a>
+                <a href="portal-absences.html">Absences</a>
+                <a href="portal-messagerie.html">Annonces</a>
+                <a href="#" onclick="logoutParent()">Déconnexion</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="portal-hero">
+        <div class="ph-inner">
+            <h1><i class="fas fa-file-lines"></i>Notes & Bulletins</h1>
+            <p>Résultats par trimestre et bulletin officiel téléchargeable en PDF</p>
+        </div>
+    </section>
+
+    <div class="mud" aria-hidden="true"></div>
+
+    <main class="notes-wrap">
+        <div class="controls" id="controls" style="display:none;">
+            <div class="trim-tabs" id="trimTabs">
+                <button data-seq="1" class="active">1er Trimestre</button>
+                <button data-seq="2">2e Trimestre</button>
+                <button data-seq="3">3e Trimestre</button>
+            </div>
+            <div class="right-controls">
+                <span class="student-switch" id="studentSwitch" style="display:none;">
+                    <select id="studentSelect" onchange="onStudentChange()"></select>
+                </span>
+                <button class="btn-print" onclick="downloadBulletinPDF()"><i class="fas fa-download"></i> Télécharger le bulletin (PDF)</button>
+            </div>
+        </div>
+        <div id="content">
+            <div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Chargement des résultats...</p></div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Questions sur les notes ?</h3>
+                    <p>Contactez le secrétariat de l'établissement :</p>
+                    <p><i class="fas fa-phone"></i> <span data-ecole="telephone">+223 20 21 22 29</span></p>
+                    <p><i class="fas fa-envelope"></i> <span data-ecole="email">contact@epmk.ml</span></p>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>&copy; <span data-year>2026</span> École Privée Moussa Koné — Sébénicoro, Bamako, Mali. Tous droits réservés.</p></div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="../js/site-config.js"></script>
+    <script>
+        // ── Année scolaire (admin → Paramètres), repli calculé selon la date ──
+        let anneeScolaire = (function(){ const d = new Date(); const y = d.getMonth() >= 8 ? d.getFullYear() : d.getFullYear() - 1; return y + '-' + (y + 1); })();
+        async function chargerAnneeScolaire() {
+            try {
+                const { data } = await sb.from('parametres_annee')
+                    .select('annee_en_cours').eq('id', 1).maybeSingle();
+                if (data && data.annee_en_cours) anneeScolaire = data.annee_en_cours;
+            } catch (_) {}
+        }
+        let sb = null, currentParent = null, children = [], classesMap = {};
+
+        // Cache : evite de re-signer la meme photo a chaque rendu.
+        const _cachePhotosNotes = {};
+
+        /**
+         * Resout `students.photo_url` en une adresse affichable : URL
+         * complete heritee renvoyee telle quelle, ou CHEMIN dans le bucket
+         * prive `photos-eleves` signe a la demande. Sans cette distinction,
+         * une photo ajoutee apres le passage au bucket prive renvoie un 404 —
+         * un chemin seul n'est jamais une adresse valide sur le web.
+         */
+        async function urlPhotoNotes(valeur) {
+            if (!valeur) return null;
+            if (/^https?:\/\//i.test(valeur)) return valeur;
+
+            const dejaVu = _cachePhotosNotes[valeur];
+            if (dejaVu && dejaVu.expire > Date.now()) return dejaVu.url;
+
+            try {
+                const { data, error } = await sb.storage
+                    .from('photos-eleves').createSignedUrl(valeur, 3600);
+                if (error || !data?.signedUrl) return null;
+                _cachePhotosNotes[valeur] = { url: data.signedUrl, expire: Date.now() + 3300000 };
+                return data.signedUrl;
+            } catch (e) {
+                console.warn('Photo non signée :', e && e.message);
+                return null;
+            }
+        }
+        let currentStudent = null, currentSeq = 1;
+        // cache par classe : { classId: { subjects:[] } }
+        const classCache = {};
+
+        function waitForSupabase() {
+            return new Promise(resolve => {
+                if (window.supabaseClient) { resolve(); return; }
+                const i = setInterval(() => { if (window.supabaseClient) { clearInterval(i); resolve(); } }, 100);
+                setTimeout(() => { clearInterval(i); resolve(); }, 5000);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            await waitForSupabase();
+            sb = window.supabaseClient;
+            await chargerAnneeScolaire();
+            document.getElementById('mobileMenuBtn')?.addEventListener('click', () => document.getElementById('mobileNav')?.classList.toggle('active'));
+            document.querySelectorAll('#trimTabs button').forEach(b => b.addEventListener('click', () => {
+                document.querySelectorAll('#trimTabs button').forEach(x => x.classList.remove('active'));
+                b.classList.add('active');
+                currentSeq = parseInt(b.dataset.seq);
+                renderBulletin(currentStudent, currentSeq);
+            }));
+            await checkAuth();
+        });
+
+        async function checkAuth() {
+            try {
+                const { data: { session } } = await sb.auth.getSession();
+                if (!session) { window.location.href = 'portal-parents.html'; return; }
+                await loadParent(session.user);
+            } catch (e) { window.location.href = 'portal-parents.html'; }
+        }
+
+        async function loadParent(user) {
+            const { data: parent, error } = await sb.from('parents').select('*').eq('email', user.email).single();
+            if (error || !parent) { showEmpty('Profil parent introuvable. Contactez l\'administration.'); return; }
+            currentParent = parent;
+            const fullName = `${parent.first_name || ''} ${parent.last_name || ''}`.trim() || 'Parent';
+            document.getElementById('parentNameDisplay').textContent = fullName;
+            document.getElementById('avatarInitials').textContent = (((parent.first_name||'')[0]||'') + ((parent.last_name||'')[0]||'')).toUpperCase() || 'PP';
+            await loadChildren(parent.id);
+        }
+
+        async function loadChildren(parentId) {
+            let studentIds = [];
+            try {
+                const { data: links } = await sb.from('parent_students').select('student_id').eq('parent_id', parentId);
+                if (links?.length) studentIds = links.map(l => l.student_id);
+            } catch (_) {}
+
+            let students = [];
+            if (studentIds.length) {
+                const { data } = await sb.from('students_with_balance').select('*').in('id', studentIds);
+                students = data || [];
+            } else {
+                const email = currentParent.email;
+                const { data } = await sb.from('students_with_balance').select('*').or(`father_email.eq.${email},mother_email.eq.${email}`);
+                students = data || [];
+            }
+            if (!students.length) { showEmpty('Aucun élève lié à votre compte. Contactez l\'administration.'); return; }
+
+            // La vue students_with_balance n'expose pas photo_url — on la complète depuis "students"
+            try {
+                const ids = students.map(s => s.id).filter(Boolean);
+                if (ids.length) {
+                    const { data: photos } = await sb.from('students').select('id, photo_url').in('id', ids);
+                    const photoMap = {};
+                    (photos || []).forEach(p => { photoMap[p.id] = p.photo_url; });
+                    students.forEach(s => { if (!s.photo_url && photoMap[s.id]) s.photo_url = photoMap[s.id]; });
+                }
+            } catch (_) {}
+
+            const classIds = [...new Set(students.map(s => s.class_id).filter(Boolean))];
+            if (classIds.length) {
+                const { data: classes } = await sb.from('classes').select('id, nom, niveau').in('id', classIds);
+                classes?.forEach(c => classesMap[c.id] = c);
+            }
+            children = students;
+            currentStudent = children[0];
+
+            if (children[0]?.photo_url) {
+                const adresse = await urlPhotoNotes(children[0].photo_url);
+                if (adresse) {
+                    const img = document.getElementById('avatarImg');
+                    img.src = adresse;
+                    img.onload = () => { img.style.display = 'block'; document.getElementById('avatarInitials').style.display = 'none'; };
+                }
+            }
+
+            document.getElementById('controls').style.display = 'flex';
+            if (children.length > 1) {
+                document.getElementById('studentSwitch').style.display = 'inline-block';
+                document.getElementById('studentSelect').innerHTML = children.map((s, i) => {
+                    const cls = classesMap[s.class_id]?.nom || '';
+                    return `<option value="${i}">${s.last_name || ''} ${s.first_name || ''}${cls ? ' — ' + cls : ''}</option>`;
+                }).join('');
+            }
+            await renderBulletin(currentStudent, currentSeq);
+        }
+
+        async function onStudentChange() {
+            const i = parseInt(document.getElementById('studentSelect').value) || 0;
+            currentStudent = children[i];
+            await renderBulletin(currentStudent, currentSeq);
+        }
+
+        // ── Récupère matières (coef) de la classe (avec cache) ──
+        // N'interroge plus `students` de la classe : le rang et la moyenne
+        // de classe viennent désormais de epmk_rang_bulletin (calculés
+        // côté base), plus jamais d'une liste d'élèves chargée ici.
+        async function getClassData(classId) {
+            if (classCache[classId]) return classCache[classId];
+            const { data: cs } = await sb.from('class_subjects')
+                .select('coefficient, subjects(id, name, code)').eq('class_id', classId);
+            const result = { subjects: cs || [] };
+            classCache[classId] = result;
+            return result;
+        }
+
+        function mean(arr) { const v = arr.map(x => parseFloat(x)).filter(x => !isNaN(x)); return v.length ? v.reduce((a,b)=>a+b,0)/v.length : null; }
+
+        // Moyenne d'une matière : devoirs ×1, examens ×2, participation ×0.5 (identique à l'admin)
+        function subjectMoyenne(buckets) {
+            let sum = 0, w = 0;
+            const d = mean(buckets.devoirs), e = mean(buckets.examens), p = mean(buckets.participations);
+            if (d != null) { sum += d * 1; w += 1; }
+            if (e != null) { sum += e * 2; w += 2; }
+            if (p != null) { sum += p * 0.5; w += 0.5; }
+            return w > 0 ? Math.min(sum / w, 20) : null;
+        }
+
+        // Calcule le bulletin d'un élève à partir de SES PROPRES notes
+        function computeBulletin(studentId, classSubjects, notesByStudent) {
+            const matieres = [];
+            let totalPoints = 0, totalCoef = 0;
+            for (const cs of classSubjects) {
+                const sid = cs.subjects?.id;
+                const coef = parseFloat(cs.coefficient) || 1;
+                const buckets = notesByStudent[studentId]?.[sid] || { devoirs: [], examens: [], participations: [] };
+                const moy = subjectMoyenne(buckets);
+                matieres.push({
+                    nom: cs.subjects?.name || 'Matière',
+                    noteClasse: mean(buckets.devoirs),
+                    compo: mean(buckets.examens),
+                    moyenne: moy, coef
+                });
+                if (moy != null && moy > 0) { totalPoints += moy * coef; totalCoef += coef; }
+            }
+            return { matieres, totalPoints, totalCoef, moyenne: totalCoef > 0 ? totalPoints / totalCoef : null };
+        }
+
+        async function renderBulletin(student, seq) {
+            const content = document.getElementById('content');
+            content.innerHTML = '<div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Chargement...</p></div>';
+
+            const classId = student.class_id;
+
+            // Vérifier que ce trimestre est publié par l'administration
+            let published = false;
+            try {
+                const { data: pub } = await sb.from('bulletins_publies')
+                    .select('published').eq('class_id', classId).eq('sequence', seq).maybeSingle();
+                published = !!(pub && pub.published);
+            } catch (_) { published = false; }
+
+            if (!published) {
+                showEmpty(`Le bulletin du ${({1:'1er',2:'2e',3:'3e'}[seq]||seq)} trimestre n'est pas encore disponible. Il sera publié par l'établissement après le conseil de classe.`);
+                return;
+            }
+
+            const { subjects: classSubjects } = await getClassData(classId);
+
+            // Notes de l'ÉLÈVE UNIQUEMENT — le rang et la moyenne de classe
+            // sont calculés côté base (epmk_rang_bulletin) : cette page ne
+            // charge plus jamais les notes des autres élèves de la classe,
+            // ni pour construire le bulletin, ni pour le classement.
+            const { data: myNotes, error } = await sb.from('notes')
+                .select('student_id, subject_id, type, value')
+                .eq('class_id', classId).eq('sequence', seq).eq('student_id', student.id);
+            if (error) { showEmpty('Erreur lors du chargement des notes.'); return; }
+
+            if (!myNotes || !myNotes.length) {
+                showEmpty(`Aucune note enregistrée pour ce trimestre (${seq}).`);
+                return;
+            }
+
+            // Organiser par matière → type (un seul élève ici)
+            const notesByStudent = {};
+            myNotes.forEach(n => {
+                (notesByStudent[n.student_id] = notesByStudent[n.student_id] || {});
+                const b = notesByStudent[n.student_id][n.subject_id] = notesByStudent[n.student_id][n.subject_id] || { devoirs: [], examens: [], participations: [] };
+                const t = (n.type || '').toLowerCase();
+                if (t.includes('exam') || t.includes('compo')) b.examens.push(n.value);
+                else if (t.includes('partic')) b.participations.push(n.value);
+                else b.devoirs.push(n.value);
+            });
+
+            // Liste des matières : depuis class_subjects, ou fallback depuis mes propres notes
+            let subjectsList = classSubjects;
+            if (!subjectsList.length) {
+                const ids = [...new Set(myNotes.map(n => n.subject_id).filter(Boolean))];
+                const { data: subs } = await sb.from('subjects').select('id, name, code').in('id', ids);
+                subjectsList = (subs || []).map(s => ({ coefficient: 1, subjects: s }));
+            }
+
+            const mine = computeBulletin(student.id, subjectsList, notesByStudent);
+
+            // Rang et moyenne de classe : calculés ENTIÈREMENT côté base.
+            // epmk_rang_bulletin vérifie elle-même que l'appelant a le droit
+            // de connaître le rang de cet élève (son enfant, son propre
+            // enseignant, ou l'administration) — aucune note d'un autre
+            // élève ne transite jamais par le navigateur.
+            let effectif = null, moyClasse = null;
+            try {
+                const { data: rangData, error: rangError } = await sb.rpc('epmk_rang_bulletin', {
+                    p_student_id: student.id, p_class_id: classId, p_sequence: seq
+                });
+                if (!rangError && rangData && rangData.length) {
+                    mine.rang = rangData[0].rang;
+                    effectif = rangData[0].effectif;
+                    moyClasse = rangData[0].moyenne_classe;
+                }
+            } catch (_) {}
+
+            const photoResolue = await urlPhotoNotes(student.photo_url);
+            renderSheet(student, seq, mine, effectif, moyClasse, photoResolue);
+        }
+
+        function fmt(n) { return n == null ? '—' : n.toFixed(2); }
+        function colorFor(n) { return n == null ? '#9ca3af' : n >= 10 ? '#059669' : '#dc2626'; }
+
+        // Reduit le bulletin pour qu'il tienne a l'ecran, sans rien reorganiser
+        function ajusterEchelleBulletin() {
+            const wrap = document.querySelector('.sheet-scaler');
+            const sheet = wrap && wrap.querySelector('.sheet');
+            if (!wrap || !sheet) return;
+            if (window.innerWidth > 900) {
+                sheet.style.transform = '';
+                wrap.style.height = '';
+                return;
+            }
+            const echelle = Math.min(1, wrap.clientWidth / 794);
+            sheet.style.transform = 'scale(' + echelle + ')';
+            wrap.style.height = (sheet.offsetHeight * echelle) + 'px';
+        }
+        window.addEventListener('resize', ajusterEchelleBulletin);
+        window.addEventListener('orientationchange', function () { setTimeout(ajusterEchelleBulletin, 150); });
+
+        function renderSheet(student, seq, bul, effectif, moyClasse, photoResolue) {
+            const cls = classesMap[student.class_id] || {};
+            const mention = getMention(bul.moyenne);
+            const trimLabel = { 1: '1er Trimestre', 2: '2e Trimestre', 3: '3e Trimestre' }[seq] || `Trimestre ${seq}`;
+            // photoResolue est deja une adresse SIGNEE (ou null) — resolue en
+            // amont par l'appelant, jamais photo_url brut : cette fonction
+            // construit du HTML en une fois via innerHTML, sans possibilite
+            // d'y placer un await directement.
+            const photo = photoResolue
+                ? `<img class="b-photo" src="${photoResolue}" alt="Photo">`
+                : `<div class="b-photo-fb">${((student.first_name||'')[0]||'') + ((student.last_name||'')[0]||'') || '?'}</div>`;
+            const fmtDate = d => d ? new Date(d).toLocaleDateString('fr-FR') : '—';
+
+            document.getElementById('content').innerHTML = `
+            <div class="sheet-scaler"><div class="sheet">
+                <div class="b-header">
+                    <div class="crest"><div class="logo">EPMK</div><small>Moussa Koné</small></div>
+                    <div class="ident">
+                        <h1>École Privée Moussa Koné</h1>
+                        <div class="sub">Sébénicoro-Sibiribougou, Bamako, Mali &nbsp;•&nbsp; Tél : +223 20 21 22 29 &nbsp;•&nbsp; contact@epmk.ml</div>
+                        <span class="agree">Agréée — Ministère de l'Éducation Nationale du Mali</span>
+                    </div>
+                    <div class="doc"><div class="t">BULLETIN DE NOTES</div><div class="y">${trimLabel} — Année ${anneeScolaire}</div></div>
+                </div>
+
+                <div class="b-student">
+                    ${photo}
+                    <div class="b-fields">
+                        <div class="f"><div class="k">Nom & Prénom</div><div class="v">${student.last_name || ''} ${student.first_name || ''}</div></div>
+                        <div class="f"><div class="k">Classe</div><div class="v">${cls.nom || 'Non assignée'}</div></div>
+                        <div class="f"><div class="k">Effectif</div><div class="v">${effectif || '—'} élèves</div></div>
+                        <div class="f"><div class="k">Matricule</div><div class="v">${student.matricule || '—'}</div></div>
+                        <div class="f"><div class="k">Année scolaire</div><div class="v">${anneeScolaire}</div></div>
+                        <div class="f"><div class="k">Édité le</div><div class="v">${new Date().toLocaleDateString('fr-FR')}</div></div>
+                    </div>
+                </div>
+
+                <div class="grades-scroll"><table class="grades">
+                    <thead>
+                        <tr>
+                            <th class="left">Matière</th>
+                            <th>Note de classe</th>
+                            <th>Composition</th>
+                            <th>Moy. /20</th>
+                            <th>Coef</th>
+                            <th>Moy. × Coef</th>
+                            <th class="left">Appréciation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${bul.matieres.map(m => `
+                            <tr>
+                                <td class="subj">${m.nom}</td>
+                                <td>${fmt(m.noteClasse)}</td>
+                                <td>${fmt(m.compo)}</td>
+                                <td class="moy" style="color:${colorFor(m.moyenne)};">${fmt(m.moyenne)}</td>
+                                <td>${m.coef}</td>
+                                <td>${m.moyenne != null ? (m.moyenne * m.coef).toFixed(2) : '—'}</td>
+                                <td class="appr">${apprForAvg(m.moyenne)}</td>
+                            </tr>`).join('')}
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td class="subj">TOTAUX</td>
+                            <td colspan="3"></td>
+                            <td>${bul.totalCoef || '—'}</td>
+                            <td>${bul.totalPoints ? bul.totalPoints.toFixed(2) : '—'}</td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table></div>
+
+                <div class="b-summary">
+                    <div class="cell"><div class="val">${fmt(bul.moyenne)}<span style="font-size:.85rem;color:#9ca3af;">/20</span></div><div class="lbl">Moyenne générale</div></div>
+                    <div class="cell"><div class="val">${bul.rang ? bul.rang + (bul.rang === 1 ? 'er' : 'e') : '—'}</div><div class="lbl">Rang / ${effectif || '—'}</div></div>
+                    <div class="cell"><div class="val">${fmt(moyClasse)}</div><div class="lbl">Moyenne de la classe</div></div>
+                    <div class="cell"><div class="val"><span class="mention-pill" style="background:${mention.bg};color:${mention.color};">${mention.label}</span></div><div class="lbl">Mention</div></div>
+                </div>
+
+                <div class="b-appreciation">
+                    <div class="k">Appréciation générale du conseil de classe</div>
+                    <div class="v">${mention.appreciation}</div>
+                </div>
+
+                <div style="margin-top:14px;border:1.5px dashed #b45309;background:#fffbeb;border-radius:8px;padding:10px 14px;text-align:center;">
+                    <div style="font-weight:700;color:#b45309;font-size:9.5pt;"><i class="fas fa-info-circle"></i> Document non officiel</div>
+                    <div style="color:#92400e;font-size:8.5pt;margin-top:2px;">L'original signé et cacheté est délivré par l'établissement.</div>
+                </div>
+
+                <div class="b-foot" style="margin-top:18px;">Document de consultation généré le ${new Date().toLocaleString('fr-FR')} via le Portail Parents — École Privée Moussa Koné, Bamako, Mali.</div>
+            </div></div>`;
+
+            // Ajuster l'échelle une fois le document rendu (polices chargées)
+            requestAnimationFrame(ajusterEchelleBulletin);
+            setTimeout(ajusterEchelleBulletin, 300);
+        }
+
+        function apprForAvg(n) {
+            if (n == null) return '—';
+            if (n >= 16) return 'Excellent';
+            if (n >= 14) return 'Très bien';
+            if (n >= 12) return 'Bien';
+            if (n >= 10) return 'Passable';
+            if (n >= 8)  return 'Insuffisant';
+            return 'Très insuffisant';
+        }
+
+        function getMention(avgN) {
+            if (avgN == null) return { label: 'N/A', bg: '#f3f4f6', color: '#6b7280', appreciation: 'Aucune moyenne disponible pour ce trimestre.' };
+            if (avgN >= 16) return { label: 'Excellent', bg: '#d1fae5', color: '#059669', appreciation: 'Félicitations ! Des résultats remarquables et un travail exemplaire. L\'élève est vivement encouragé à maintenir ce niveau.' };
+            if (avgN >= 14) return { label: 'Très Bien', bg: '#dbeafe', color: '#1d4ed8', appreciation: 'Très bon trimestre. Le travail est solide et régulier ; les efforts portent leurs fruits.' };
+            if (avgN >= 12) return { label: 'Bien', bg: '#e0e7ff', color: '#4338ca', appreciation: 'Bon ensemble de résultats. En poursuivant ces efforts, l\'élève peut viser encore plus haut.' };
+            if (avgN >= 10) return { label: 'Passable', bg: '#fef3c7', color: '#b45309', appreciation: 'Résultats moyens mais satisfaisants. Un travail plus régulier consolidera les acquis.' };
+            if (avgN >= 8)  return { label: 'Insuffisant', bg: '#fee2e2', color: '#dc2626', appreciation: 'Résultats insuffisants. Un accompagnement et davantage de travail personnel sont nécessaires.' };
+            return { label: 'Très insuffisant', bg: '#fee2e2', color: '#b91c1c', appreciation: 'Résultats très insuffisants. Un suivi rapproché et une remise à niveau sont indispensables.' };
+        }
+
+        function showEmpty(msg) {
+            document.getElementById('content').innerHTML = `<div class="empty-state"><i class="fas fa-folder-open"></i><p>${msg}</p></div>`;
+        }
+
+        function downloadBulletinPDF() {
+            const sheet = document.querySelector('.sheet');
+            if (!sheet) { return; }
+            if (typeof html2pdf === 'undefined') {
+                // Repli : si la librairie n'a pas chargé, ouvrir l'impression (l'utilisateur peut "Enregistrer en PDF")
+                window.print();
+                return;
+            }
+
+            const s = currentStudent || {};
+            const clean = t => (t || '').toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_|_$/g, '');
+            const fileName = `Bulletin_${clean(s.last_name)}_${clean(s.first_name)}_T${currentSeq}_${anneeScolaire}.pdf`;
+
+            const btn = document.querySelector('.btn-print');
+            const original = btn ? btn.innerHTML : '';
+            if (btn) { btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Génération du PDF...'; }
+
+            const opt = {
+                margin: 6,
+                filename: fileName,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak: { mode: ['avoid-all'] }
+            };
+
+            html2pdf().set(opt).from(sheet).save()
+                .then(() => { if (btn) { btn.disabled = false; btn.innerHTML = original; } })
+                .catch(() => {
+                    if (btn) { btn.disabled = false; btn.innerHTML = original; }
+                    window.print(); // repli en cas d'échec
+                });
+        }
+
+        async function logoutParent() {
+    try {
+        const { data: { user } } = await sb.auth.getUser();
+        if (user) await sb.from('journal_connexions').insert([{ user_id: user.id, email: user.email, role: 'parent', action: 'deconnexion', user_agent: navigator.userAgent }]);
+    } catch (_) {}
+
+            try { await sb.auth.signOut(); } catch (_) {}
+            window.location.href = 'portal-parents.html';
+        }
+    </script>
+</body>
+</html>

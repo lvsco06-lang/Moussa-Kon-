@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Portail Parents | École Privée Moussa Koné · EPMK</title>
+    <meta name="description" content="Connectez-vous au portail parents de l'École Privée Moussa Koné (EPMK) : notes, bulletins, paiements, absences et annonces en temps réel.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root{
+            --green-900:#3E2723; --green-800:#4E342E; --green-700:#5D4037;
+            --green-600:#795548; --green-500:#8D6E63;
+            --gold:#c79a3b; --gold-soft:#e6c976; --gold-deep:#a97f28;
+            --brick:#9c4a2e;
+            --ink:#15241c; --muted:#59685d; --line:#e7e3d6;
+            --paper:#fbfaf4; --paper-2:#f4f1e6;
+            --primary:var(--green-700); --vert:var(--green-600);
+            --marron:var(--gold-deep); --blanc:#ffffff; --gris:#f4f1e6;
+            --radius:18px; --radius-sm:11px; --radius-pill:999px;
+            --shadow-sm:0 1px 2px rgba(20,40,30,.05),0 2px 6px rgba(20,40,30,.05);
+            --shadow:0 14px 34px -16px rgba(62,39,35,.22);
+            --shadow-lg:0 30px 70px -24px rgba(62,39,35,.34);
+            --maxw:1180px;
+            --fdisplay:'Fraunces',Georgia,'Times New Roman',serif;
+            --fbody:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+        }
+        *{margin:0;padding:0;box-sizing:border-box;min-width:0}
+        html{scroll-behavior:smooth}
+        html,body{overflow-x:hidden;max-width:100%}
+        body{font-family:var(--fbody);color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased}
+        a{color:inherit;text-decoration:none}
+        ::selection{background:var(--gold-soft);color:var(--green-900)}
+        :focus-visible{outline:2.5px solid var(--gold-deep);outline-offset:3px;border-radius:4px}
+
+        .mud{height:14px;background-repeat:repeat-x;background-size:34px 14px;opacity:.9;
+            background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='14' viewBox='0 0 34 14'%3E%3Cg fill='none' stroke='%23c79a3b' stroke-width='1.2'%3E%3Cpath d='M0 7h34'/%3E%3Cpath d='M17 2l4 5-4 5-4-5z'/%3E%3Ccircle cx='4' cy='7' r='1.4' fill='%23c79a3b' stroke='none'/%3E%3Ccircle cx='30' cy='7' r='1.4' fill='%23c79a3b' stroke='none'/%3E%3C/g%3E%3C/svg%3E");}
+
+        /* ===== HEADER ===== */
+        .header{position:sticky;top:0;z-index:1000;background:rgba(251,250,244,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+        .navbar{display:flex;align-items:center;gap:20px;max-width:var(--maxw);margin:0 auto;padding:.85rem 24px}
+        .logo-container{display:flex;align-items:center;gap:12px;flex-shrink:0}
+        .logo-img{height:46px;width:auto}
+        .logo-fallback{display:flex;align-items:center;gap:12px}
+        .logo-circle{width:46px;height:46px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;font-family:var(--fdisplay);font-weight:600;font-size:.95rem;color:var(--gold-soft);letter-spacing:.5px;background:radial-gradient(circle at 30% 25%,var(--green-600),var(--green-800));box-shadow:inset 0 0 0 2px rgba(199,154,59,.55),var(--shadow-sm)}
+        .logo-text{display:flex;flex-direction:column;line-height:1.15}
+        .logo-main{font-family:var(--fdisplay);font-weight:600;font-size:1.02rem;color:var(--green-800)}
+        .logo-sub{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);font-weight:600}
+        .nav-links{list-style:none;display:flex;align-items:center;gap:4px;margin-left:auto}
+        .nav-links>li>a{display:inline-block;padding:.55rem .8rem;border-radius:var(--radius-pill);font-size:.92rem;font-weight:500;color:var(--ink);transition:.2s}
+        .nav-links>li>a:hover{color:var(--green-700);background:rgba(46,125,50,.08)}
+        .nav-links a.active{color:var(--green-700);background:rgba(46,125,50,.10)}
+        .nav-links li.cta-nav a{background:var(--green-700);color:#fff;font-weight:600;padding:.6rem 1.15rem;box-shadow:var(--shadow-sm)}
+        .nav-links li.cta-nav a i{margin-right:.4rem}
+        .menu-toggle{color:var(--green-800)!important}
+
+        /* ===== HERO ===== */
+        .portal-hero{position:relative;overflow:hidden;text-align:center;color:#fff;
+            background:radial-gradient(900px 500px at 85% 0%,rgba(199,154,59,.18),transparent 60%),
+                       linear-gradient(160deg,var(--green-700),var(--green-900))}
+        .portal-hero .inner{max-width:var(--maxw);margin:0 auto;padding:58px 24px 54px}
+        .portal-hero .eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-size:.76rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-soft);background:rgba(255,255,255,.08);border:1px solid rgba(230,201,118,.3);padding:.4rem .9rem;border-radius:var(--radius-pill);margin-bottom:1.1rem}
+        .portal-hero h1{font-family:var(--fdisplay);font-weight:500;font-size:clamp(2.2rem,4.6vw,3.2rem);line-height:1.08;margin-bottom:.7rem}
+        .portal-hero p{color:rgba(255,255,255,.82);font-size:1.1rem;max-width:36rem;margin:0 auto}
+
+        /* ===== SECTION PRINCIPALE ===== */
+        .main-section{max-width:var(--maxw);margin:0 auto;padding:64px 24px;display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:start}
+
+        /* ===== CARTE DE CONNEXION ===== */
+        .login-card{background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow-lg);padding:2.6rem 2.4rem;position:relative;overflow:hidden}
+        .login-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green-600),var(--gold))}
+        .login-header{text-align:center;margin-bottom:1.8rem}
+        .login-icon-wrap{width:74px;height:74px;margin:0 auto 16px;border-radius:50%;display:grid;place-items:center;color:var(--gold-soft);font-size:1.7rem;background:radial-gradient(circle at 30% 25%,var(--green-600),var(--green-800));box-shadow:inset 0 0 0 2px rgba(199,154,59,.5),var(--shadow)}
+        .login-header h2{font-family:var(--fdisplay);font-weight:600;font-size:1.5rem;color:var(--green-800);margin-bottom:.35rem}
+        .login-header p{color:var(--muted);font-size:.94rem}
+
+        .form-group{margin-bottom:1.15rem}
+        .form-group label{display:block;font-weight:600;font-size:.87rem;color:var(--ink);margin-bottom:.4rem}
+        .input-wrap{position:relative;display:flex;align-items:center}
+        .input-wrap>i{position:absolute;left:14px;color:var(--gold-deep);pointer-events:none;font-size:.95rem;width:18px;text-align:center}
+        .input-wrap input{width:100%;padding:.8rem .9rem .8rem 2.7rem;border:1.5px solid var(--line);border-radius:var(--radius-sm);font-size:.95rem;font-family:inherit;background:var(--paper);outline:none;transition:border-color .2s,box-shadow .2s,background .2s}
+        .input-wrap input:focus{border-color:var(--green-600);background:#fff;box-shadow:0 0 0 3px rgba(46,125,50,.12)}
+        .toggle-pwd{position:absolute;right:10px;background:none;border:none;color:var(--muted);cursor:pointer;padding:.4rem;font-size:.95rem}
+        .toggle-pwd:hover{color:var(--green-700)}
+
+        .form-options{display:flex;justify-content:space-between;align-items:center;margin:.2rem 0 1.3rem;font-size:.86rem;flex-wrap:wrap;gap:.5rem}
+        .remember-label{display:flex;align-items:center;gap:8px;cursor:pointer;color:var(--ink)}
+        .remember-label input{accent-color:var(--green-700);width:15px;height:15px}
+        .forgot-link{color:var(--green-700);font-weight:600}
+        .forgot-link:hover{text-decoration:underline}
+
+        .btn-login{width:100%;padding:.95rem;background:var(--green-700);color:#fff;border:none;border-radius:var(--radius-pill);font-family:inherit;font-size:1rem;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:var(--shadow);transition:background .2s,transform .2s}
+        .btn-login:hover:not(:disabled){background:var(--green-800);transform:translateY(-2px)}
+        .btn-login:disabled{opacity:.65;cursor:wait;transform:none}
+
+        .security-note{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:1.2rem;color:var(--muted);font-size:.82rem}
+        .security-note i{color:var(--green-600)}
+
+        /* ===== PANNEAU FONCTIONNALITÉS ===== */
+        .features-panel h3{font-family:var(--fdisplay);font-weight:600;font-size:1.45rem;color:var(--green-900);margin-bottom:.4rem}
+        .features-panel>p{color:var(--muted);font-size:.95rem;margin-bottom:1.4rem}
+        .features-list{display:flex;flex-direction:column;gap:14px}
+        .feature-item{display:flex;gap:16px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:1.05rem 1.2rem;transition:transform .2s,box-shadow .2s}
+        .feature-item:hover{transform:translateX(5px);box-shadow:var(--shadow)}
+        .feature-icon-wrap{width:48px;height:48px;flex-shrink:0;border-radius:13px;display:grid;place-items:center;font-size:1.15rem;color:var(--green-900);background:linear-gradient(150deg,var(--gold-soft),var(--gold))}
+        .feature-item h4{font-family:var(--fdisplay);font-weight:600;font-size:1.03rem;color:var(--green-800);margin-bottom:.2rem}
+        .feature-item p{font-size:.86rem;color:var(--muted);line-height:1.5}
+
+        /* ===== AIDE ===== */
+        .help-section{max-width:var(--maxw);margin:0 auto 64px;padding:0 24px}
+        .help-card{background:var(--paper-2);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:var(--radius);padding:1.7rem 2rem}
+        .help-card h3{font-family:var(--fdisplay);font-weight:600;font-size:1.2rem;color:var(--green-800);display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem}
+        .help-card h3 i{color:var(--gold-deep)}
+        .help-card>p{color:var(--ink);font-size:.92rem;margin-bottom:.5rem}
+        .help-card ul{padding-left:1.3rem;color:var(--muted);font-size:.9rem}
+        .help-card li{margin-bottom:.25rem}
+        .help-contacts{display:flex;gap:1.8rem;margin-top:1rem;flex-wrap:wrap}
+        .help-contacts p{color:var(--green-800);font-size:.9rem;font-weight:600;display:flex;align-items:center;gap:.5rem}
+        .help-contacts i{color:var(--gold-deep)}
+        .help-contacts a:hover{text-decoration:underline}
+
+        /* ===== FOOTER ===== */
+        footer{background:var(--green-900);color:rgba(255,255,255,.65);text-align:center;padding:1.6rem 24px;font-size:.87rem}
+        footer a{color:rgba(255,255,255,.85)}
+        footer a:hover{color:var(--gold-soft)}
+
+        /* ===== RESPONSIVE ===== */
+        .mobile-menu-btn{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;margin-left:auto}
+        .mobile-menu-btn span{width:24px;height:2.5px;background:var(--green-800);border-radius:2px}
+        .mobile-nav{display:none;flex-direction:column;background:#fff;border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+        .mobile-nav.active{display:flex}
+        .mobile-nav a{padding:.9rem 24px;border-bottom:1px solid var(--paper-2);font-size:.94rem;font-weight:500;display:flex;align-items:center;gap:.7rem}
+        .mobile-nav a i{color:var(--gold-deep);width:20px;text-align:center}
+        .mobile-nav a.active{color:var(--green-700);font-weight:600}
+        @media (max-width:980px){
+            .nav-links{display:none}
+            .mobile-menu-btn{display:flex}
+        }
+        @media (max-width:900px){
+            .main-section{grid-template-columns:1fr;gap:36px;padding:48px 24px}
+        }
+        @media (max-width:480px){
+            .nav-links li.cta-nav a{padding:.5rem .8rem;font-size:.82rem}
+        }
+        @media (max-width:520px){
+            .navbar{padding:.75rem 16px}
+            .portal-hero .inner{padding:40px 16px 38px}
+            .main-section{padding:36px 16px;gap:28px}
+            .login-card{padding:1.8rem 1.3rem}
+            .help-section{padding:0 16px}
+            .help-card{padding:1.3rem 1.2rem}
+            .help-contacts{flex-direction:column;gap:.6rem}
+            .feature-item{padding:.9rem 1rem}
+        }
+        @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+        @keyframes spin{to{transform:rotate(360deg)}}
+    </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+    <nav class="navbar">
+        <div class="logo-container">
+            <img src="../images/logo.png" alt="Logo École Privée Moussa Koné" class="logo-img"
+                 onerror="this.style.display='none'; document.querySelector('.logo-fallback').style.display='flex';">
+            <div class="logo-fallback">
+                <div class="logo-circle">EPMK</div>
+                <div class="logo-text">
+                    <span class="logo-main">Moussa Koné</span>
+                    <span class="logo-sub">École Privée</span>
+                </div>
+            </div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="../index.html">Accueil</a></li>
+            <li><a href="etablissement.html">L'Établissement</a></li>
+            <li><a href="admission.html">Admission</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li class="cta-nav"><a href="portal-parents.html" class="active"><i class="fas fa-user-lock"></i>Portail Parents</a></li>
+        </ul>
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    </nav>
+    <div class="mobile-nav" id="mobileNav">
+        <a href="../index.html"><i class="fas fa-home"></i> Accueil</a>
+        <a href="etablissement.html"><i class="fas fa-school"></i> L'Établissement</a>
+        <a href="admission.html"><i class="fas fa-file-signature"></i> Admission</a>
+        <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
+        <a href="portal-parents.html" class="active"><i class="fas fa-user-lock"></i> Portail Parents</a>
+    </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="portal-hero">
+    <div class="inner">
+        <span class="eyebrow"><i class="fas fa-shield-halved"></i> Espace sécurisé</span>
+        <h1>Portail parents</h1>
+        <p>Suivez la scolarité de votre enfant en temps réel : notes, bulletins, paiements, absences et annonces.</p>
+    </div>
+</section>
+
+<div class="mud" aria-hidden="true"></div>
+
+<!-- ===== CONNEXION + FONCTIONNALITÉS ===== -->
+<div class="main-section">
+
+    <!-- Formulaire de connexion -->
+    <div class="login-card">
+        <div class="login-header">
+            <div class="login-icon-wrap"><i class="fas fa-user"></i></div>
+            <h2>Connexion espace parents</h2>
+            <p>Accédez à l'espace sécurisé de suivi scolaire</p>
+        </div>
+
+        <div id="msgBox" style="display:none; padding:12px 16px; border-radius:8px; margin-bottom:1rem; font-size:0.9rem;"></div>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">E-mail parent</label>
+                <div class="input-wrap">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" placeholder="votre@email.com" required autocomplete="email">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <div class="input-wrap">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Votre mot de passe" required autocomplete="current-password">
+                    <button type="button" class="toggle-pwd" id="togglePwd" aria-label="Afficher le mot de passe"><i class="fas fa-eye"></i></button>
+                </div>
+            </div>
+
+            <div class="form-options">
+                <label class="remember-label">
+                    <input type="checkbox" id="rememberMe"> Se souvenir de moi
+                </label>
+                <a href="#" class="forgot-link" id="forgotLink">Mot de passe oublié ?</a>
+            </div>
+
+            <button type="submit" class="btn-login" id="submitBtn">
+                <span id="btnText">Se connecter</span>
+                <span id="btnArrow">→</span>
+            </button>
+        </form>
+
+        <div class="security-note">
+            <i class="fas fa-shield-halved"></i>
+            Connexion sécurisée SSL — vos données sont protégées
+        </div>
+    </div>
+
+    <!-- Fonctionnalités -->
+    <div class="features-panel">
+        <h3>Ce que vous pouvez faire</h3>
+        <p>Votre espace personnel, accessible 24h/24 depuis votre téléphone ou ordinateur.</p>
+        <div class="features-list">
+            <div class="feature-item">
+                <div class="feature-icon-wrap"><i class="fas fa-chart-line"></i></div>
+                <div>
+                    <h4>Notes & bulletins</h4>
+                    <p>Consultez les notes détaillées et les bulletins de chaque séquence dès leur publication</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon-wrap"><i class="fas fa-calendar-check"></i></div>
+                <div>
+                    <h4>Présences & absences</h4>
+                    <p>Suivez l'assiduité de votre enfant et justifiez ses absences directement en ligne</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon-wrap"><i class="fas fa-credit-card"></i></div>
+                <div>
+                    <h4>Situation financière</h4>
+                    <p>Consultez l'historique des paiements, le solde restant dû, et payez en ligne en toute sécurité</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon-wrap"><i class="fas fa-bullhorn"></i></div>
+                <div>
+                    <h4>Annonces de l'école</h4>
+                    <p>Recevez les communications importantes : réunions, événements, informations de paiement</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== AIDE ===== -->
+<div class="help-section">
+    <div class="help-card">
+        <h3><i class="fas fa-circle-question"></i> Première connexion ?</h3>
+        <p><strong>Vos identifiants vous ont été communiqués par l'école :</strong></p>
+        <ul>
+            <li>Par e-mail lors de l'inscription de votre enfant</li>
+            <li>Via le carnet de liaison en début d'année scolaire</li>
+        </ul>
+        <div class="help-contacts">
+            <p><i class="fas fa-phone"></i> <span data-ecole="telephone">+223 20 21 22 29</span></p>
+            <p><i class="fas fa-envelope"></i> <a href="mailto:portail@epmk.ml">portail@epmk.ml</a></p>
+            <p><i class="fas fa-clock"></i> Lun–Ven, 8h – 17h</p>
+        </div>
+    </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <p>© <span data-year>2026</span> <span data-ecole="nom">École Privée Moussa Koné</span> (EPMK) — Tous droits réservés · <a href="../index.html">Retour au site</a></p>
+</footer>
+
+<!-- ===== SCRIPTS ===== -->
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="../js/site-config.js"></script>
+<script>
+    const redirectUrl = new URLSearchParams(window.location.search).get('redirect') || 'portal-dashboard.html';
+    let isLoading = false;
+    let sb = null;
+
+    function waitForSupabase() {
+        return new Promise(resolve => {
+            if (window.supabaseClient) { resolve(); return; }
+            const iv = setInterval(() => { if (window.supabaseClient) { clearInterval(iv); resolve(); } }, 100);
+            setTimeout(() => { clearInterval(iv); resolve(); }, 5000);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        await waitForSupabase();
+        sb = window.supabaseClient;
+        if (!sb) { showMsg('Erreur de chargement du portail. Rafraîchissez la page.', 'error'); return; }
+
+        // Si déjà connecté → rediriger
+        try {
+            const { data: { session } } = await sb.auth.getSession();
+            if (session) {
+                const ok = await isParentAccount(session.user.email);
+                if (ok) { window.location.href = redirectUrl; return; }
+                await sb.auth.signOut();
+            }
+        } catch(e) {}
+
+        document.getElementById('mobileMenuBtn')?.addEventListener('click', () =>
+            document.getElementById('mobileNav')?.classList.toggle('active'));
+
+        document.getElementById('loginForm').addEventListener('submit', handleLogin);
+        document.getElementById('forgotLink').addEventListener('click', handleForgot);
+
+        // Afficher / masquer le mot de passe
+        const toggle = document.getElementById('togglePwd');
+        const pwd = document.getElementById('password');
+        if (toggle && pwd) {
+            toggle.addEventListener('click', () => {
+                const show = pwd.type === 'password';
+                pwd.type = show ? 'text' : 'password';
+                toggle.innerHTML = show ? '<i class="fas fa-eye-slash"></i>' : '<i class="fas fa-eye"></i>';
+                toggle.setAttribute('aria-label', show ? 'Masquer le mot de passe' : 'Afficher le mot de passe');
+            });
+        }
+    });
+
+    async function isParentAccount(email) {
+        try {
+            const { data } = await sb.from('parents').select('id').eq('email', email).single();
+            return !!data;
+        } catch(e) { return false; }
+    }
+
+    async function handleLogin(e) {
+        e.preventDefault();
+        if (isLoading) return;
+
+        const email    = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            return showMsg('Veuillez entrer un email valide.', 'error');
+        }
+        if (password.length < 4) {
+            return showMsg('Le mot de passe doit faire au moins 4 caractères.', 'error');
+        }
+
+        isLoading = true;
+        setBtn(true);
+        hideMsg();
+
+        try {
+            const { data, error } = await sb.auth.signInWithPassword({ email, password });
+
+            if (error) {
+                if (error.message.includes('Email not confirmed')) {
+                    throw new Error('Votre compte n\'est pas encore activé. Veuillez contacter l\'administration de l\'école au +223 20 21 22 29.');
+                }
+                if (error.message.includes('Invalid login') || error.message.includes('invalid_credentials')) {
+                    throw new Error('Email ou mot de passe incorrect.');
+                }
+                if (error.message.includes('Too many requests')) {
+                    throw new Error('Trop de tentatives. Veuillez patienter quelques minutes.');
+                }
+                throw new Error('Connexion impossible pour le moment. Veuillez réessayer.');
+            }
+
+            const ok = await isParentAccount(data.user.email);
+            if (!ok) {
+                await sb.auth.signOut();
+                throw new Error('Ce compte n\'est pas un compte parent. Contactez l\'administration.');
+            }
+
+            // Enregistrer la date de dernière connexion (pour l'admin)
+            try {
+                await sb.from('parents').update({ last_login: new Date().toISOString() }).eq('id', data.user.id);
+            } catch (e) { console.warn('last_login non mis à jour:', e); }
+
+            // Journal des connexions (non bloquant)
+            try {
+                const { data: { user } } = await sb.auth.getUser();
+                if (user) await sb.from('journal_connexions').insert([{ user_id: user.id, email: user.email, role: 'parent', action: 'connexion', user_agent: navigator.userAgent }]);
+            } catch (_) {}
+            showMsg('Connexion réussie ! Redirection en cours…', 'success');
+            setTimeout(() => { window.location.href = redirectUrl; }, 1200);
+
+        } catch(err) {
+            showMsg(err.message, 'error');
+            document.getElementById('password').value = '';
+            document.getElementById('password').focus();
+            isLoading = false;
+            setBtn(false);
+        }
+    }
+
+    async function handleForgot(e) {
+        e.preventDefault();
+        const email = document.getElementById('email').value.trim();
+        if (!email) {
+            showMsg('Entrez d\'abord votre email, puis cliquez sur "Mot de passe oublié".', 'warning');
+            document.getElementById('email').focus();
+            return;
+        }
+        try {
+            const { error } = await sb.auth.resetPasswordForEmail(email, {
+                redirectTo: window.location.origin + '/pages/reset-password.html'
+            });
+            if (error) throw error;
+            showMsg('Email de réinitialisation envoyé. Vérifiez votre boîte de réception.', 'success');
+        } catch (err) {
+            showMsg('L\'envoi de l\'email de réinitialisation a échoué. Réessayez ou contactez l\'école.', 'error');
+        }
+    }
+
+    function setBtn(loading) {
+        const btn  = document.getElementById('submitBtn');
+        const text = document.getElementById('btnText');
+        const arr  = document.getElementById('btnArrow');
+        btn.disabled = loading;
+        if (loading) {
+            text.textContent = 'Connexion en cours…';
+            arr.innerHTML = '<i class="fas fa-circle-notch" style="animation:spin 1s linear infinite"></i>';
+        } else {
+            text.textContent = 'Se connecter';
+            arr.textContent  = '→';
+        }
+    }
+
+    function showMsg(msg, type) {
+        const box = document.getElementById('msgBox');
+        const styles = {
+            success: 'background:#e8f5e9;color:#4E342E;border:1px solid #795548',
+            error:   'background:#fdecea;color:#8c2f24;border:1px solid #ef4444',
+            warning: 'background:#fdf6e3;color:#8a6414;border:1px solid #c79a3b',
+            info:    'background:#e8f1fb;color:#1e40af;border:1px solid #3b82f6'
+        };
+        box.style.cssText = styles[type] + ';display:block;padding:12px 16px;border-radius:10px;margin-bottom:1rem;font-size:0.9rem;';
+        box.textContent = msg;
+    }
+
+    function hideMsg() {
+        const box = document.getElementById('msgBox');
+        box.style.display = 'none';
+        box.textContent = '';
+    }
+</script>
+</body>
+</html>

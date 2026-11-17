@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Connexion | Administration · École Privée Moussa Koné</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+
+    <style>
+        :root{
+            --brown-900:#3E2723; --brown-800:#4E342E; --brown-700:#5D4037;
+            --brown-600:#6D4C41; --brown-500:#795548; --brown-400:#8D6E63;
+            --brown-300:#A1887F; --brown-200:#D7CCC8; --brown-100:#EFEBE9;
+            --white:#FFFFFF; --paper:#FAF8F7; --paper-2:#F3EEEB; --line:#E3D9D4;
+            --ink:#2A211D; --muted:#7A6A63;
+            --ok:#2E7D32; --err:#B23B2E;
+            --radius:14px; --radius-sm:10px; --radius-pill:999px;
+            --shadow:0 12px 30px -14px rgba(62,39,35,.28);
+            --shadow-lg:0 30px 70px -24px rgba(62,39,35,.42);
+            --fdisplay:'Fraunces',Georgia,serif;
+            --fbody:'Inter',system-ui,-apple-system,sans-serif;
+        }
+        *{margin:0;padding:0;box-sizing:border-box;min-width:0}
+        html,body{overflow-x:hidden;max-width:100%}
+        body{
+            font-family:var(--fbody);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased;
+            min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+            padding:32px 18px;gap:20px;
+            background:
+                radial-gradient(820px 460px at 88% -12%,rgba(141,110,99,.16),transparent 62%),
+                radial-gradient(680px 460px at -8% 112%,rgba(93,64,55,.12),transparent 58%),
+                var(--paper);
+        }
+        ::selection{background:var(--brown-200);color:var(--brown-900)}
+        :focus-visible{outline:2.5px solid var(--brown-500);outline-offset:3px;border-radius:4px}
+        .hidden{display:none!important}
+
+        /* ── Carte de connexion ────────────────────────────── */
+        .login-container{width:100%;max-width:430px;display:flex;flex-direction:column;gap:18px}
+        .login-card{
+            position:relative;overflow:hidden;
+            background:var(--white);border:1px solid var(--line);border-radius:20px;
+            box-shadow:var(--shadow-lg);padding:2.4rem 2.2rem 2rem;
+        }
+        .login-card::before{
+            content:"";position:absolute;top:0;left:0;right:0;height:4px;
+            background:linear-gradient(90deg,var(--brown-700),var(--brown-300));
+        }
+
+        .login-header{text-align:center;margin-bottom:1.7rem}
+        .logo-container{display:flex;flex-direction:column;align-items:center;gap:.75rem}
+        .logo-crest{
+            width:72px;height:72px;border-radius:50%;display:grid;place-items:center;
+            font-family:var(--fdisplay);font-weight:600;font-size:.95rem;letter-spacing:.5px;color:#fff;
+            background:radial-gradient(circle at 32% 26%,var(--brown-500),var(--brown-800));
+            box-shadow:inset 0 0 0 2px rgba(215,204,200,.5),var(--shadow);
+        }
+        .login-header h1{font-family:var(--fdisplay);font-weight:600;font-size:1.4rem;color:var(--brown-900);line-height:1.18}
+        .login-subtitle{
+            margin-top:.3rem;font-size:.76rem;font-weight:700;letter-spacing:.14em;
+            text-transform:uppercase;color:var(--brown-400);
+        }
+
+        /* ── Formulaire ────────────────────────────────────── */
+        .form-group{margin-bottom:1.05rem}
+        .form-group label{
+            display:flex;align-items:center;gap:.5rem;
+            font-size:.85rem;font-weight:600;color:var(--ink);margin-bottom:.42rem;
+        }
+        .form-group label i{color:var(--brown-400);width:15px;text-align:center;font-size:.82rem}
+        .form-group input[type="email"],.password-container input{
+            width:100%;font-family:inherit;font-size:.95rem;color:var(--ink);
+            background:var(--paper);border:1.5px solid var(--line);border-radius:var(--radius-sm);
+            padding:.78rem .9rem;transition:border-color .2s,box-shadow .2s,background .2s;
+        }
+        .form-group input:focus{
+            outline:none;border-color:var(--brown-500);background:var(--white);
+            box-shadow:0 0 0 3px rgba(93,64,55,.12);
+        }
+        .password-container{position:relative;display:flex;align-items:center}
+        .password-container input{padding-right:2.8rem}
+        .toggle-password{
+            position:absolute;right:6px;background:none;border:none;
+            color:var(--muted);cursor:pointer;padding:.45rem;font-size:.92rem;border-radius:6px;
+        }
+        .toggle-password:hover{color:var(--brown-700);background:var(--paper-2)}
+
+        .form-options{display:flex;justify-content:flex-end;margin:.2rem 0 1.25rem}
+        .forgot-password{font-size:.85rem;font-weight:600;color:var(--brown-700);text-decoration:none}
+        .forgot-password:hover{text-decoration:underline}
+
+        .login-btn{
+            position:relative;width:100%;display:flex;align-items:center;justify-content:center;gap:.6rem;
+            font-family:inherit;font-size:.98rem;font-weight:600;color:#fff;
+            background:var(--brown-700);border:none;border-radius:var(--radius-pill);
+            padding:.92rem;cursor:pointer;box-shadow:0 10px 22px -12px rgba(93,64,55,.85);
+            transition:background .2s,transform .18s;
+        }
+        .login-btn:hover:not(:disabled){background:var(--brown-800);transform:translateY(-2px)}
+        .login-btn:disabled{opacity:.65;cursor:wait;transform:none}
+        .spinner{
+            width:17px;height:17px;border:2.5px solid rgba(255,255,255,.35);
+            border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;
+        }
+        @keyframes spin{to{transform:rotate(360deg)}}
+
+        .login-footer{text-align:center;margin-top:1.35rem;padding-top:1.05rem;border-top:1px solid var(--paper-2)}
+        .login-footer p{font-size:.77rem;color:var(--muted)}
+
+        /* ── Message (auth.js colore la bordure) ───────────── */
+        .message-container{
+            margin-top:1.05rem;background:var(--paper);
+            border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:.85rem 1rem;
+        }
+        .message-content{display:flex;align-items:flex-start;gap:.6rem}
+        .error-icon{margin-top:.15rem;font-size:1rem;color:inherit}
+        .message-content p{flex:1;font-size:.87rem;color:var(--ink)}
+        .close-message{background:none;border:none;color:var(--muted);cursor:pointer;font-size:.9rem;padding:.15rem}
+        .close-message:hover{color:var(--err)}
+
+        /* ── Modal réinitialisation ────────────────────────── */
+        .modal{
+            position:fixed;inset:0;z-index:2000;padding:18px;
+            display:flex;align-items:center;justify-content:center;
+            background:rgba(42,33,29,.55);backdrop-filter:blur(3px);
+        }
+        .modal-content{
+            background:var(--white);border-radius:18px;width:100%;max-width:420px;
+            box-shadow:var(--shadow-lg);overflow:hidden;
+            animation:modalIn .28s cubic-bezier(.22,1,.36,1);
+        }
+        @keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(.98)}to{opacity:1;transform:none}}
+        .modal-header{
+            display:flex;align-items:center;justify-content:space-between;gap:10px;padding:16px 22px;
+            background:linear-gradient(150deg,var(--brown-700),var(--brown-900));
+        }
+        .modal-header h3{
+            font-family:var(--fdisplay);font-weight:600;font-size:1.08rem;color:#fff;
+            display:flex;align-items:center;gap:.55rem;
+        }
+        .modal-header h3 i{color:var(--brown-200)}
+        .close-modal{background:none;border:none;font-size:1.5rem;line-height:1;color:rgba(255,255,255,.85);cursor:pointer}
+        .close-modal:hover{color:#fff}
+        .modal-body{padding:20px 22px 22px}
+        .modal-body p{font-size:.88rem;color:var(--muted);margin-bottom:.9rem}
+        .modal-body input{
+            width:100%;font-family:inherit;font-size:.95rem;background:var(--paper);
+            border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:.74rem .88rem;margin-bottom:.9rem;
+        }
+        .modal-body input:focus{
+            outline:none;border-color:var(--brown-500);background:var(--white);
+            box-shadow:0 0 0 3px rgba(93,64,55,.12);
+        }
+        .modal-btn{
+            width:100%;font-family:inherit;font-size:.94rem;font-weight:600;color:#fff;
+            background:var(--brown-600);border:none;border-radius:var(--radius-pill);
+            padding:.8rem;cursor:pointer;transition:background .2s;
+        }
+        .modal-btn:hover{background:var(--brown-800)}
+
+        /* ── Retour au site ────────────────────────────────── */
+        .back-site{
+            display:inline-flex;align-items:center;gap:.45rem;align-self:center;
+            font-size:.84rem;font-weight:600;color:var(--brown-600);text-decoration:none;
+            padding:.5rem .95rem;border:1.5px solid var(--line);border-radius:var(--radius-pill);
+            background:rgba(255,255,255,.65);transition:.18s;
+        }
+        .back-site:hover{color:var(--brown-800);border-color:var(--brown-300);background:var(--white)}
+        .back-site i{font-size:.78rem}
+
+        /* ── Réassurance ───────────────────────────────────── */
+        .system-info{width:100%}
+        .info-card ul{list-style:none;display:flex;justify-content:center;gap:.7rem 1.4rem;flex-wrap:wrap}
+        .info-card li{display:flex;align-items:center;gap:.42rem;font-size:.77rem;color:var(--muted)}
+        .info-card li i{color:var(--brown-400)}
+
+        @media (max-width:480px){
+            body{padding:24px 14px}
+            .login-card{padding:1.9rem 1.35rem 1.6rem}
+            .logo-crest{width:62px;height:62px;font-size:.85rem}
+            .login-header h1{font-size:1.22rem}
+        }
+        @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <!-- En-tête -->
+            <div class="login-header">
+                <div class="logo-container">
+                    <div class="logo-crest">EPMK</div>
+                    <h1 data-ecole="nom">École Privée Moussa Koné</h1>
+                </div>
+                <p class="login-subtitle">Espace Administration</p>
+            </div>
+
+            <!-- Formulaire de connexion -->
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Adresse e-mail</label>
+                    <input type="email" id="email" placeholder="direction@epmk.ml" required autocomplete="email">
+                </div>
+
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Mot de passe</label>
+                    <div class="password-container">
+                        <input type="password" id="password" placeholder="••••••••" required autocomplete="current-password">
+                        <button type="button" class="toggle-password" id="togglePassword" aria-label="Afficher le mot de passe">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <a href="#" class="forgot-password" id="forgotPassword">Mot de passe oublié ?</a>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <i class="fas fa-arrow-right-to-bracket"></i>
+                    <span id="btnText">Se connecter</span>
+                    <div class="spinner hidden" id="spinner"></div>
+                </button>
+
+                <div class="login-footer">
+                    <p>© <span id="anneeCourante">2026</span> <span data-ecole="nom">École Privée Moussa Koné</span> · Accès réservé à la direction</p>
+                </div>
+            </form>
+
+            <!-- Messages (structure requise par auth.js) -->
+            <div id="messageContainer" class="message-container hidden">
+                <div class="message-content">
+                    <i class="fas fa-exclamation-circle error-icon"></i>
+                    <p id="messageText"></p>
+                    <button class="close-message" id="closeMessage" aria-label="Fermer">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Modal réinitialisation du mot de passe -->
+            <div id="resetModal" class="modal hidden">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3><i class="fas fa-key"></i> Réinitialiser le mot de passe</h3>
+                        <button class="close-modal" id="closeResetModal" aria-label="Fermer">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Entrez votre adresse e-mail pour recevoir un lien de réinitialisation :</p>
+                        <input type="email" id="resetEmail" placeholder="votre@email.com" autocomplete="email">
+                        <button class="modal-btn" id="sendResetLink">Envoyer le lien</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Retour au site public -->
+        <a href="../index.html" class="back-site">
+            <i class="fas fa-arrow-left"></i> Retour au site
+        </a>
+
+        <!-- Réassurance -->
+        <div class="system-info">
+            <div class="info-card">
+                <ul>
+                    <li><i class="fas fa-shield-halved"></i> Connexion sécurisée</li>
+                    <li><i class="fas fa-clock-rotate-left"></i> Accès journalisés</li>
+                    <li><i class="fas fa-mobile-screen"></i> Interface responsive</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script defer src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script defer src="js/supabase-config.js"></script>
+    <script defer src="js/site-config.js"></script>
+    <script defer src="js/auth.js"></script>
+    <script>document.getElementById('anneeCourante').textContent = new Date().getFullYear();</script>
+</body>
+</html>

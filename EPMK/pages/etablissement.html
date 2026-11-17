@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notre Établissement | École Privée Moussa Koné · Bamako</title>
+    <meta name="description" content="Découvrez l'École Privée Moussa Koné (EPMK) : deux sites spécialisés à Bamako, de la crèche au secondaire, un projet éducatif d'excellence depuis 2008.">
+
+    <link rel="canonical" href="https://epmk.netlify.app/pages/etablissement.html">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="École Privée Moussa Koné">
+    <meta name="geo.region" content="ML-BKO">
+    <meta name="geo.placename" content="Bamako">
+    <meta name="geo.position" content="12.584149;-8.071827">
+
+    <!-- Partage sur les réseaux sociaux -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="École Privée Moussa Koné">
+    <meta property="og:locale" content="fr_FR">
+    <meta property="og:url" content="https://epmk.netlify.app/pages/etablissement.html">
+    <meta property="og:title" content="Notre établissement | École Privée Moussa Koné, Bamako">
+    <meta property="og:description" content="Découvrez l'École Privée Moussa Koné (EPMK) : deux sites spécialisés à Bamako, de la crèche au secondaire, un projet éducatif d'excellence depuis 2008.">
+    <meta property="og:image" content="https://epmk.netlify.app/images/epmk-partage.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Notre établissement | École Privée Moussa Koné, Bamako">
+    <meta name="twitter:description" content="Découvrez l'École Privée Moussa Koné (EPMK) : deux sites spécialisés à Bamako, de la crèche au secondaire, un projet éducatif d'excellence depuis 2008.">
+    <meta name="twitter:image" content="https://epmk.netlify.app/images/epmk-partage.jpg">
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+
+    <style>
+        :root{
+            --green-900:#3E2723; --green-800:#4E342E; --green-700:#5D4037;
+            --green-600:#795548; --green-500:#8D6E63;
+            --gold:#c79a3b; --gold-soft:#e6c976; --gold-deep:#a97f28;
+            --brick:#9c4a2e;
+            --ink:#15241c; --muted:#59685d; --line:#e7e3d6;
+            --paper:#fbfaf4; --paper-2:#f4f1e6; --white:#ffffff;
+
+            /* Compat main.js */
+            --primary:var(--green-700); --vert:var(--green-600);
+            --marron:var(--gold-deep); --blanc:#ffffff; --gris:#f4f1e6;
+
+            --radius:18px; --radius-sm:11px; --radius-pill:999px;
+            --shadow-sm:0 1px 2px rgba(20,40,30,.05),0 2px 6px rgba(20,40,30,.05);
+            --shadow:0 14px 34px -16px rgba(62,39,35,.22);
+            --shadow-lg:0 30px 70px -24px rgba(62,39,35,.34);
+            --maxw:1180px;
+            --fdisplay:'Fraunces',Georgia,'Times New Roman',serif;
+            --fbody:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:var(--fbody);color:var(--ink);background:var(--paper);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+        a{color:inherit;text-decoration:none}
+        img{max-width:100%;display:block}
+        ::selection{background:var(--gold-soft);color:var(--green-900)}
+        :focus-visible{outline:2.5px solid var(--gold-deep);outline-offset:3px;border-radius:4px}
+        .wrap,.container{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+
+        .mud{height:14px;background-repeat:repeat-x;background-size:34px 14px;opacity:.9;
+            background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='14' viewBox='0 0 34 14'%3E%3Cg fill='none' stroke='%23c79a3b' stroke-width='1.2'%3E%3Cpath d='M0 7h34'/%3E%3Cpath d='M17 2l4 5-4 5-4-5z'/%3E%3Ccircle cx='4' cy='7' r='1.4' fill='%23c79a3b' stroke='none'/%3E%3Ccircle cx='30' cy='7' r='1.4' fill='%23c79a3b' stroke='none'/%3E%3C/g%3E%3C/svg%3E");}
+
+        /* ===== HEADER / NAV (identique à l'accueil) ===== */
+        .header{position:sticky;top:0;z-index:1000;background:rgba(251,250,244,.9);
+            backdrop-filter:blur(10px);border-bottom:1px solid var(--line);transition:transform .35s ease,box-shadow .35s ease}
+        .navbar{display:flex;align-items:center;gap:20px;max-width:var(--maxw);margin:0 auto;padding:.85rem 24px}
+        .logo-container{display:flex;align-items:center;gap:12px;flex-shrink:0}
+        .logo-img{height:46px;width:auto}
+        .logo-fallback{display:flex;align-items:center;gap:12px}
+        .logo-circle{width:46px;height:46px;border-radius:50%;flex-shrink:0;display:grid;place-items:center;
+            font-family:var(--fdisplay);font-weight:600;font-size:.95rem;color:var(--gold-soft);letter-spacing:.5px;
+            background:radial-gradient(circle at 30% 25%,var(--green-600),var(--green-800));
+            box-shadow:inset 0 0 0 2px rgba(199,154,59,.55),var(--shadow-sm)}
+        .logo-text{display:flex;flex-direction:column;line-height:1.15}
+        .logo-main{font-family:var(--fdisplay);font-weight:600;font-size:1.02rem;color:var(--green-800)}
+        .logo-sub{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-deep);font-weight:600}
+        .nav-links{list-style:none;display:flex;align-items:center;gap:4px;margin-left:auto}
+        .nav-links>li>a{display:inline-block;padding:.55rem .8rem;border-radius:var(--radius-pill);font-size:.92rem;font-weight:500;color:var(--ink);transition:.2s}
+        .nav-links>li>a:hover{color:var(--green-700);background:rgba(46,125,50,.08)}
+        .nav-links a.active{color:var(--green-700);background:rgba(46,125,50,.10)}
+        .nav-links li.cta-nav a{background:var(--green-700);color:#fff;font-weight:600;padding:.6rem 1.15rem;box-shadow:var(--shadow-sm)}
+        .nav-links li.cta-nav a:hover{background:var(--green-800);color:#fff}
+        .nav-links li.cta-nav a i{margin-right:.4rem}
+        .menu-toggle{color:var(--green-800)!important}
+
+        /* ===== BOUTONS ===== */
+        .btn-primary,.btn-secondary{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--fbody);
+            font-weight:600;font-size:.98rem;padding:.9rem 1.6rem;border-radius:var(--radius-pill);cursor:pointer;
+            transition:transform .2s ease,box-shadow .2s ease,background .2s ease;border:1.5px solid transparent}
+        .btn-primary{background:var(--green-700);color:#fff;box-shadow:var(--shadow)}
+        .btn-primary:hover{background:var(--green-800);transform:translateY(-2px);box-shadow:var(--shadow-lg)}
+        .btn-secondary{background:transparent;color:var(--green-800);border-color:rgba(27,94,32,.35)}
+        .btn-secondary:hover{border-color:var(--green-700);background:rgba(46,125,50,.06);transform:translateY(-2px)}
+        .btn-gold{background:var(--gold-deep);color:#fff;box-shadow:0 14px 30px -14px rgba(169,127,40,.7)}
+        .btn-gold:hover{background:#95701f}
+
+        /* ===== TITRES DE SECTION ===== */
+        .section{padding:80px 0}
+        .section-head{max-width:660px;margin:0 auto 50px;text-align:center}
+        .eyebrow{display:inline-block;font-size:.76rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:.75rem}
+        .section-title{font-family:var(--fdisplay);font-weight:500;font-size:clamp(1.9rem,3.6vw,2.6rem);color:var(--green-900);line-height:1.12;text-align:center}
+        .section-sub{margin-top:.9rem;color:var(--muted);font-size:1.05rem;text-align:center}
+
+        /* ===== HERO ===== */
+        .etab-hero{position:relative;overflow:hidden;text-align:center;
+            background:radial-gradient(1000px 500px at 85% -10%,rgba(199,154,59,.14),transparent 60%),
+                       radial-gradient(800px 560px at -5% 120%,rgba(46,125,50,.10),transparent 55%),var(--paper)}
+        .etab-hero .container{padding-top:74px;padding-bottom:70px}
+        .etab-hero .eyebrow{display:inline-flex;align-items:center;gap:.5rem;background:rgba(199,154,59,.12);padding:.4rem .85rem;border-radius:var(--radius-pill)}
+        .etab-hero h1{font-family:var(--fdisplay);font-weight:500;font-size:clamp(2.4rem,5vw,3.6rem);color:var(--green-900);line-height:1.06;margin:1.2rem 0 .9rem}
+        .etab-hero>.container>p{color:var(--muted);font-size:1.14rem;max-width:40rem;margin:0 auto}
+        .hero-stats{display:flex;justify-content:center;gap:0;flex-wrap:wrap;margin-top:2.6rem}
+        .hero-stat{padding:0 34px;display:flex;flex-direction:column;position:relative}
+        .hero-stat+.hero-stat::before{content:"";position:absolute;left:0;top:12%;height:76%;width:1px;background:var(--line)}
+        .hero-stat-number{font-family:var(--fdisplay);font-weight:600;font-size:2.3rem;color:var(--green-700);line-height:1}
+        .hero-stat-label{font-size:.85rem;color:var(--muted);margin-top:.35rem}
+
+        /* ===== DEUX SITES ===== */
+        .sites-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+        .site-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;
+            transition:transform .25s ease,box-shadow .25s ease;display:flex;flex-direction:column}
+        .site-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+        /* Proportion 16/10 : plus équilibrée qu'un bandeau étroit,
+           et le bloc s'adapte à la largeur de la carte. */
+        .site-media{position:relative;aspect-ratio:16/10;overflow:hidden;
+            background:linear-gradient(150deg,var(--green-600),var(--green-800))}
+        .site-media .ph{position:absolute;inset:0;display:grid;place-items:center;color:rgba(230,201,118,.85);font-size:3rem}
+        /* Positionnement absolu : la taille ne dépend plus du calcul de la grille.
+           `contain` affiche l'image ENTIÈRE (aucun recadrage), centrée sur le fond. */
+        .site-media img{position:absolute;inset:0;width:100%;height:100%;
+            object-fit:contain;padding:18px;z-index:1}
+        /* Une vraie photo de reportage peut remplir tout le cadre :
+           ajoutez la classe `photo` à la balise <img>. */
+        .site-media img.photo{object-fit:cover;padding:0}
+        .site-head{padding:22px 26px 0}
+        .site-tag{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-deep);background:rgba(199,154,59,.12);padding:.3rem .7rem;border-radius:var(--radius-pill);margin-bottom:.7rem}
+        .site-head h3{font-family:var(--fdisplay);font-weight:600;font-size:1.45rem;color:var(--green-800)}
+        .site-features{list-style:none;padding:16px 26px 4px;display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}
+        .site-features li{display:flex;align-items:center;gap:.6rem;font-size:.92rem;color:var(--ink)}
+        .site-features li i{width:30px;height:30px;flex-shrink:0;border-radius:9px;display:grid;place-items:center;color:var(--green-700);background:rgba(46,125,50,.10);font-size:.85rem}
+        .site-highlight{margin:16px 26px 26px;background:var(--paper-2);border-left:4px solid var(--gold);border-radius:12px;padding:16px 18px}
+        .site-highlight h4{font-family:var(--fdisplay);font-weight:600;color:var(--green-800);font-size:1.02rem;margin-bottom:.35rem;display:flex;align-items:center;gap:.5rem}
+        .site-highlight p{font-size:.9rem;color:var(--muted);line-height:1.55}
+
+        /* ===== GALERIE ===== */
+        .galerie-sec{background:var(--paper-2)}
+        .galerie-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+        .galerie-item{position:relative;aspect-ratio:4/3;border-radius:var(--radius-sm);overflow:hidden;
+            box-shadow:var(--shadow-sm);cursor:pointer}
+        .galerie-item .ph{position:absolute;inset:0;display:grid;place-items:center;color:rgba(255,255,255,.9);font-size:2.4rem;z-index:1}
+        .galerie-item img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
+        .galerie-content{position:absolute;inset:auto 0 0 0;z-index:3;padding:16px 16px 14px;color:#fff;
+            background:linear-gradient(to top,rgba(46,33,29,.85),transparent)}
+        .galerie-content h4{font-family:var(--fdisplay);font-weight:600;font-size:1.02rem}
+        .galerie-content p{font-size:.8rem;color:rgba(255,255,255,.82);margin-top:.15rem;line-height:1.35}
+        .gg1{background:linear-gradient(150deg,var(--green-500),var(--green-700))}
+        .gg2{background:linear-gradient(150deg,var(--green-600),var(--green-900))}
+        .gg3{background:linear-gradient(150deg,var(--gold),var(--gold-deep))}
+        .gg4{background:linear-gradient(150deg,var(--green-700),#0b5637)}
+        .gg5{background:linear-gradient(150deg,var(--brick),#7a3620)}
+        .gg6{background:linear-gradient(150deg,var(--green-500),var(--gold-deep))}
+        .gg7{background:linear-gradient(150deg,var(--green-800),var(--green-600))}
+        .gg8{background:linear-gradient(150deg,#1d6b4a,var(--green-900))}
+
+        /* ===== CHIFFRES CLÉS ===== */
+        .infos-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+        .info-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:30px 22px;text-align:center;transition:transform .25s ease,box-shadow .25s ease}
+        .info-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+        .info-card h3{font-size:.82rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+        .info-number{font-family:var(--fdisplay);font-weight:600;font-size:2.6rem;color:var(--green-700);line-height:1;margin:.5rem 0 .3rem}
+        .info-label{font-size:.85rem;color:var(--muted)}
+
+        /* ===== VALEURS ===== */
+        .valeurs-sec{background:radial-gradient(900px 500px at 85% 0%,rgba(199,154,59,.16),transparent 60%),linear-gradient(160deg,var(--green-800),var(--green-900));color:#fff}
+        .valeurs-sec .section-title{color:#fff}
+        .valeurs-sec .eyebrow{color:var(--gold-soft)}
+        .valeurs-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+        .valeur-card{background:rgba(255,255,255,.055);border:1px solid rgba(230,201,118,.2);border-radius:var(--radius);padding:28px 22px;transition:.25s;text-align:center}
+        .valeur-card:hover{background:rgba(255,255,255,.09);transform:translateY(-4px)}
+        .valeur-icon{width:56px;height:56px;margin:0 auto 16px;border-radius:16px;display:grid;place-items:center;font-size:1.4rem;color:var(--green-900);background:linear-gradient(150deg,var(--gold-soft),var(--gold))}
+        .valeur-card h3{font-family:var(--fdisplay);font-weight:600;font-size:1.14rem;margin-bottom:.5rem}
+        .valeur-card p{font-size:.9rem;color:rgba(255,255,255,.72);line-height:1.55}
+
+        /* ===== CTA ===== */
+        .cta-sec{padding:0 0 84px}
+        .cta-panel{max-width:var(--maxw);margin:0 auto;position:relative;overflow:hidden;border-radius:26px;padding:58px 44px;text-align:center;color:#fff;
+            background:radial-gradient(700px 400px at 12% 10%,rgba(199,154,59,.22),transparent 55%),linear-gradient(150deg,var(--green-700),var(--green-900));box-shadow:var(--shadow-lg)}
+        .cta-panel h2{font-family:var(--fdisplay);font-weight:500;font-size:clamp(1.8rem,3.4vw,2.4rem);margin-bottom:.8rem}
+        .cta-panel p{color:rgba(255,255,255,.82);max-width:40rem;margin:0 auto 2rem;font-size:1.04rem}
+        .cta-buttons{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+        /* ===== FOOTER (identique à l'accueil) ===== */
+        .footer{background:var(--green-900);color:rgba(255,255,255,.75);padding:64px 0 0}
+        .footer-content{max-width:var(--maxw);margin:0 auto;padding:0 24px 44px;display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:40px}
+        .footer h3{font-family:var(--fdisplay);color:#fff;font-size:1.12rem;font-weight:600;margin-bottom:1.1rem}
+        .footer p{font-size:.92rem;margin-bottom:.6rem}
+        .contact-info p{display:flex;align-items:flex-start;gap:.6rem}
+        .contact-info p i{color:var(--gold);margin-top:.2rem;width:16px;text-align:center}
+        .footer a{transition:color .2s}
+        .footer a:hover{color:var(--gold-soft)}
+        .footer-links{display:flex;flex-direction:column;gap:.55rem}
+        .footer-links a{display:flex;align-items:center;gap:.55rem;font-size:.92rem}
+        .footer-links a i{color:var(--gold);font-size:.7rem}
+        .payment-methods{display:flex;flex-wrap:wrap;gap:8px;margin-top:.6rem}
+        .payment-method{font-size:.8rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);padding:.35rem .7rem;border-radius:8px;color:#fff;display:inline-flex;align-items:center;gap:.4rem}
+        .social-links{display:flex;gap:10px;margin-top:.4rem}
+        .social-link{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);color:#fff;font-size:1rem;transition:.2s}
+        .social-link:hover{background:var(--gold-deep);transform:translateY(-3px)}
+        .footer-bottom{border-top:1px solid rgba(255,255,255,.12);padding:22px 24px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;font-size:.85rem;color:rgba(255,255,255,.6);max-width:var(--maxw);margin:0 auto}
+        .footer-bottom-links{display:flex;gap:18px}
+        .footer-bottom-links a:hover{color:var(--gold-soft)}
+
+        /* ===== REVEAL ===== */
+        .reveal{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.22,1,.36,1),transform .7s cubic-bezier(.22,1,.36,1)}
+        .reveal.in{opacity:1;transform:none}
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width:960px){
+            .sites-grid{grid-template-columns:1fr}
+            .galerie-grid{grid-template-columns:repeat(2,1fr)}
+            .infos-grid,.valeurs-grid{grid-template-columns:repeat(2,1fr)}
+            .footer-content{grid-template-columns:1fr 1fr;gap:32px}
+        }
+        @media (max-width:680px){
+            .section{padding:58px 0}
+            .galerie-grid,.infos-grid,.valeurs-grid{grid-template-columns:1fr}
+            .site-features{grid-template-columns:1fr}
+            .hero-stat{padding:10px 20px}
+            .hero-stat+.hero-stat::before{display:none}
+            .cta-panel{padding:44px 24px}
+            .footer-content{grid-template-columns:1fr}
+            .footer-bottom{flex-direction:column;text-align:center}
+        }
+        @media (prefers-reduced-motion:reduce){
+            *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+            .reveal{opacity:1;transform:none}
+        }
+
+        /* Navigation compacte en zone tablette (768px < écran < 1160px) */
+        @media (max-width:1160px){
+            .nav-links{gap:0}
+            .nav-links>li>a{padding:.5rem .55rem;font-size:.86rem}
+            .nav-links li.cta-nav a{padding:.55rem .9rem}
+        }
+        @media (max-width:1010px) and (min-width:769px){
+            .logo-text{display:none}
+            .nav-links>li>a{padding:.5rem .45rem;font-size:.82rem}
+        }
+
+        /* Polissage téléphone */
+        @media (max-width:560px){
+            .navbar{padding:.75rem 16px}
+            .wrap,.container,.admission-container{padding-left:16px;padding-right:16px}
+            .section{padding:46px 0}
+            .cta-buttons{width:100%}
+            .cta-buttons a{flex:1;justify-content:center;min-width:0;padding:.85rem 1rem;font-size:.92rem}
+            .footer-content{padding-left:16px;padding-right:16px}
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== HEADER ===== -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="logo-container">
+                <img src="../images/logo.png" alt="Logo École Privée Moussa Koné" class="logo-img"
+                     onerror="this.style.display='none'; document.querySelector('.logo-fallback').style.display='flex';">
+                <div class="logo-fallback">
+                    <div class="logo-circle">EPMK</div>
+                    <div class="logo-text">
+                        <span class="logo-main">Moussa Koné</span>
+                        <span class="logo-sub">École Privée</span>
+                    </div>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Accueil</a></li>
+                <li><a href="etablissement.html" class="active">L'Établissement</a></li>
+                <li><a href="jardin-enfants.html">Jardin d'Enfants</a></li>
+                <li><a href="primaire.html">Primaire</a></li>
+                <li><a href="secondaire.html">Secondaire</a></li>
+                <li><a href="admission.html">Admission</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li class="cta-nav"><a href="portal-parents.html"><i class="fas fa-user-lock"></i>Portail Parents</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- ===== HERO ===== -->
+        <section class="etab-hero">
+            <div class="container">
+                <span class="eyebrow"><i class="fas fa-location-dot"></i> <span data-ecole="adresse">Bamako, Mali</span> · Depuis 2008</span>
+                <h1>Notre établissement</h1>
+                <p>Deux sites spécialisés, entièrement dédiés à l'épanouissement de vos enfants — de la crèche jusqu'au secondaire.</p>
+                <div class="hero-stats">
+                    <div class="hero-stat"><span class="hero-stat-number">2</span><span class="hero-stat-label">Sites spécialisés</span></div>
+                    <div class="hero-stat"><span class="hero-stat-number">98%</span><span class="hero-stat-label">Réussite au DEF</span></div>
+                    <div class="hero-stat"><span class="hero-stat-number">15+</span><span class="hero-stat-label">Ans d'expérience</span></div>
+                </div>
+            </div>
+        </section>
+
+        <div class="mud" aria-hidden="true"></div>
+
+        <!-- ===== DEUX SITES ===== -->
+        <section class="section">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="eyebrow">Deux environnements adaptés</span>
+                    <h2 class="section-title">Nos deux sites d'excellence</h2>
+                    <p class="section-sub">Chaque tranche d'âge dans un cadre pensé pour elle : sécurité et douceur pour les plus petits, ressources et rigueur pour les grands.</p>
+                </div>
+
+                <div class="sites-grid">
+                    <!-- Site Petite Enfance -->
+                    <div class="site-card reveal">
+                        <div class="site-media">
+                            <div class="ph"><i class="fas fa-baby-carriage"></i></div>
+                            <img src="../images/creche-jardin.jpg" alt="Site Crèche et Jardin d'Enfants"
+                                 onerror="this.style.display='none'">
+                        </div>
+                        <div class="site-head">
+                            <span class="site-tag">Crèche & Jardin d'Enfants</span>
+                            <h3>Site Petite Enfance</h3>
+                        </div>
+                        <ul class="site-features">
+                            <li><i class="fas fa-baby"></i> Crèche pour les tout-petits</li>
+                            <li><i class="fas fa-child"></i> Jardin d'enfants (3–6 ans)</li>
+                            <li><i class="fas fa-snowflake"></i> Salles climatisées</li>
+                            <li><i class="fas fa-video"></i> Surveillance par caméras</li>
+                            <li><i class="fas fa-shield-halved"></i> Environnement sécurisé</li>
+                            <li><i class="fas fa-palette"></i> Espaces d'éveil colorés</li>
+                        </ul>
+                        <div class="site-highlight">
+                            <h4><i class="fas fa-shield-halved" style="color:var(--gold-deep)"></i> Sécurité maximale</h4>
+                            <p>Un environnement pensé pour les plus jeunes : surveillance permanente et espaces spécialement conçus pour leur bien-être et leur sérénité.</p>
+                        </div>
+                    </div>
+
+                    <!-- Site Scolaire -->
+                    <div class="site-card reveal">
+                        <div class="site-media" style="background:linear-gradient(150deg,var(--green-700),var(--green-900))">
+                            <div class="ph"><i class="fas fa-school"></i></div>
+                            <img src="../images/primaire-secondaire.jpg" alt="Site Primaire et Secondaire"
+                                 onerror="this.style.display='none'">
+                        </div>
+                        <div class="site-head">
+                            <span class="site-tag">Primaire & Secondaire</span>
+                            <h3>Site Scolaire</h3>
+                        </div>
+                        <ul class="site-features">
+                            <li><i class="fas fa-pencil"></i> Enseignement primaire</li>
+                            <li><i class="fas fa-book"></i> Enseignement secondaire</li>
+                            <li><i class="fas fa-laptop"></i> Salle informatique équipée</li>
+                            <li><i class="fas fa-graduation-cap"></i> Préparation au DEF</li>
+                            <li><i class="fas fa-chalkboard-user"></i> Enseignants qualifiés</li>
+                            <li><i class="fas fa-mobile-screen"></i> Suivi via le portail parents</li>
+                        </ul>
+                        <div class="site-highlight">
+                            <h4><i class="fas fa-laptop-code" style="color:var(--gold-deep)"></i> Numérique & innovation</h4>
+                            <p>Une salle informatique complète où les élèves maîtrisent les outils numériques essentiels à leur réussite scolaire et à leur avenir.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== GALERIE ===== -->
+        <section class="section galerie-sec">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="eyebrow">Un aperçu</span>
+                    <h2 class="section-title">Galerie de nos espaces</h2>
+                    <p class="section-sub">Des lieux de vie et d'apprentissage soignés, de la crèche à la salle informatique.</p>
+                </div>
+                <div class="galerie-grid">
+                    <div class="galerie-item gg1 reveal"><div class="ph"><i class="fas fa-baby"></i></div><img src="../images/salle-creche.jpg" alt="Salle de crèche" onerror="this.style.display='none'"><div class="galerie-content"><h4>Salle de crèche</h4><p>Espace coloré et sécurisé pour les tout-petits</p></div></div>
+                    <div class="galerie-item gg2 reveal"><div class="ph"><i class="fas fa-child-reaching"></i></div><img src="../images/classe-maternelle.jpg" alt="Classe maternelle" onerror="this.style.display='none'"><div class="galerie-content"><h4>Classe maternelle</h4><p>Ambiance climatisée, matériel adapté</p></div></div>
+                    <div class="galerie-item gg3 reveal"><div class="ph"><i class="fas fa-laptop"></i></div><img src="../images/salle-informatique.jpg" alt="Salle informatique" onerror="this.style.display='none'"><div class="galerie-content"><h4>Salle informatique</h4><p>Équipements modernes pour le numérique</p></div></div>
+                    <div class="galerie-item gg6 reveal"><div class="ph"><i class="fas fa-futbol"></i></div><img src="../images/cour-recreation.jpg" alt="Cour de récréation" onerror="this.style.display='none'"><div class="galerie-content"><h4>Cour de récréation</h4><p>Espace de jeux et de détente sécurisé</p></div></div>
+                    <div class="galerie-item gg7 reveal"><div class="ph"><i class="fas fa-chalkboard"></i></div><img src="../images/classe-primaire.jpg" alt="Classe primaire" onerror="this.style.display='none'"><div class="galerie-content"><h4>Classe primaire</h4><p>Espace d'apprentissage moderne et stimulant</p></div></div>
+                    <div class="galerie-item gg8 reveal"><div class="ph"><i class="fas fa-users"></i></div><img src="../images/salle-professeurs.jpg" alt="Salle des professeurs" onerror="this.style.display='none'"><div class="galerie-content"><h4>Salle des professeurs</h4><p>Espace de travail et de collaboration</p></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CHIFFRES CLÉS ===== -->
+        <section class="section">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="eyebrow">En bref</span>
+                    <h2 class="section-title">Chiffres clés</h2>
+                </div>
+                <div class="infos-grid">
+                    <div class="info-card reveal"><h3>Année de création</h3><div class="info-number">2008</div><div class="info-label">Plus de 15 ans d'excellence</div></div>
+                    <div class="info-card reveal"><h3>Élèves accompagnés</h3><div class="info-number">850+</div><div class="info-label">Depuis notre création</div></div>
+                    <div class="info-card reveal"><h3>Enseignants</h3><div class="info-number">25</div><div class="info-label">Professeurs qualifiés</div></div>
+                    <div class="info-card reveal"><h3>Taux de réussite</h3><div class="info-number">98%</div><div class="info-label">Au DEF</div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== VALEURS ===== -->
+        <section class="section valeurs-sec">
+            <div class="container">
+                <div class="section-head reveal">
+                    <span class="eyebrow">Ce qui nous guide</span>
+                    <h2 class="section-title">Nos valeurs éducatives</h2>
+                </div>
+                <div class="valeurs-grid">
+                    <div class="valeur-card reveal"><div class="valeur-icon"><i class="fas fa-graduation-cap"></i></div><h3>Excellence académique</h3><p>L'excellence à chaque cycle, avec un suivi personnalisé de chaque élève.</p></div>
+                    <div class="valeur-card reveal"><div class="valeur-icon"><i class="fas fa-heart"></i></div><h3>Bien-être des enfants</h3><p>La sécurité et le confort de vos enfants restent notre priorité absolue.</p></div>
+                    <div class="valeur-card reveal"><div class="valeur-icon"><i class="fas fa-users"></i></div><h3>Communauté éducative</h3><p>Une collaboration étroite entre parents, enseignants et élèves.</p></div>
+                    <div class="valeur-card reveal"><div class="valeur-icon"><i class="fas fa-chart-line"></i></div><h3>Innovation pédagogique</h3><p>Des méthodes modernes adaptées aux besoins de chaque génération.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CTA ===== -->
+        <section class="cta-sec">
+            <div class="container">
+                <div class="cta-panel reveal">
+                    <h2>Visitez nos établissements</h2>
+                    <p>Venez découvrir nos deux sites et rencontrer notre équipe pédagogique. Nous serons ravis de vous présenter nos installations et notre projet éducatif.</p>
+                    <div class="cta-buttons">
+                        <a href="contact.html" class="btn-primary btn-gold"><i class="fas fa-calendar-check"></i> Prendre rendez-vous</a>
+                        <a href="admission.html" class="btn-secondary" style="color:#fff;border-color:rgba(255,255,255,.4)"><i class="fas fa-file-signature"></i> Dossier d'admission</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <div class="contact-info">
+                    <p><i class="fas fa-phone"></i> <span data-ecole="telephone">+223 XX XX XX XX</span></p>
+                    <p><i class="fas fa-envelope"></i> <span data-ecole="email">contact@epmk.ml</span></p>
+                    <p><i class="fas fa-location-dot"></i> <span data-ecole="adresse">Bamako, Mali</span></p>
+                    <p><i class="fas fa-clock"></i> Lun–Ven : 7h30 – 17h30</p>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Liens rapides</h3>
+                <div class="footer-links">
+                    <a href="admission.html"><i class="fas fa-chevron-right"></i> Admission</a>
+                    <a href="portal-parents.html"><i class="fas fa-chevron-right"></i> Portail parents</a>
+                    <a href="reglement.html"><i class="fas fa-chevron-right"></i> Règlement intérieur</a>
+                    <a href="contact.html"><i class="fas fa-chevron-right"></i> Nous contacter</a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Paiement</h3>
+                <p style="font-size:.9rem">Frais de scolarité en ligne, sécurisés :</p>
+                <div class="payment-methods">
+                    <span class="payment-method"><i class="fas fa-mobile-screen-button"></i> Orange Money</span>
+                    <span class="payment-method"><i class="fas fa-mobile-screen-button"></i> Moov Money</span>
+                    <span class="payment-method"><i class="fas fa-mobile-screen-button"></i> Wave</span>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; <span data-year>2026</span> École Privée Moussa Koné. Tous droits réservés.</p>
+            <div class="footer-bottom-links">
+                <a href="mentions-legales.html">Mentions légales</a>
+                <a href="confidentialite.html">Confidentialité</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Apparition au défilement (léger, respecte prefers-reduced-motion) -->
+    <script>
+        (function(){
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches){
+                els.forEach(function(e){ e.classList.add('in'); }); return;
+            }
+            var io = new IntersectionObserver(function(entries){
+                entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+            }, { threshold:.12, rootMargin:'0px 0px -40px 0px' });
+            els.forEach(function(e){ io.observe(e); });
+        })();
+    </script>
+    <script defer src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script defer src="../js/supabase-config.js"></script>
+    <script defer src="../js/site-config.js"></script>
+    <script defer src="../js/main.js"></script>
+</body>
+</html>

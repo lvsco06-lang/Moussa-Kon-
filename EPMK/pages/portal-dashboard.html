@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex, nofollow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tableau de Bord | Portail Parents EPMK</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{
+            --green-900:#3E2723; --green-800:#4E342E; --green-700:#5D4037;
+            --green-600:#795548; --gold:#c79a3b; --gold-soft:#e6c976; --gold-deep:#a97f28;
+            --brick:#9c4a2e; --ink:#15241c; --muted:#59685d; --line:#e7e3d6;
+            --paper:#fbfaf4; --paper-2:#f4f1e6;
+            --radius:16px; --radius-sm:11px; --radius-pill:999px;
+            --shadow-sm:0 1px 2px rgba(20,40,30,.05),0 2px 6px rgba(20,40,30,.05);
+            --shadow:0 14px 34px -16px rgba(62,39,35,.22);
+            --maxw:1180px;
+            --fdisplay:'Fraunces',Georgia,serif;
+            --fbody:'Inter',system-ui,sans-serif;
+        }
+        *{box-sizing:border-box;margin:0;padding:0;min-width:0}
+        html,body{overflow-x:hidden;max-width:100%}
+        body{font-family:var(--fbody);background:var(--paper);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+        a{color:inherit;text-decoration:none}
+        ::selection{background:var(--gold-soft);color:var(--green-900)}
+        :focus-visible{outline:2.5px solid var(--gold-deep);outline-offset:3px;border-radius:4px}
+
+        .mud{height:14px;background-repeat:repeat-x;background-size:34px 14px;opacity:.9;
+            background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='14' viewBox='0 0 34 14'%3E%3Cg fill='none' stroke='%23c79a3b' stroke-width='1.2'%3E%3Cpath d='M0 7h34'/%3E%3Cpath d='M17 2l4 5-4 5-4-5z'/%3E%3Ccircle cx='4' cy='7' r='1.4' fill='%23c79a3b' stroke='none'/%3E%3Ccircle cx='30' cy='7' r='1.4' fill='%23c79a3b' stroke='none'/%3E%3C/g%3E%3C/svg%3E");}
+
+        /* NAV */
+        .header{position:sticky;top:0;z-index:1000;background:rgba(251,250,244,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+        .navbar{max-width:var(--maxw);margin:0 auto}
+        .nav-container{display:flex;align-items:center;gap:16px;padding:.75rem 24px}
+        .logo-container{display:flex;align-items:center;gap:11px;flex-shrink:0}
+        .logo-circle{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-family:var(--fdisplay);font-weight:600;font-size:.72rem;color:var(--gold-soft);letter-spacing:.4px;background:radial-gradient(circle at 30% 25%,var(--green-600),var(--green-800));box-shadow:inset 0 0 0 2px rgba(199,154,59,.55)}
+        .logo-text{line-height:1.15}
+        .logo-main{font-family:var(--fdisplay);font-weight:600;font-size:.98rem;color:var(--green-800)}
+        .logo-sub{font-size:.62rem;letter-spacing:.13em;text-transform:uppercase;color:var(--gold-deep);font-weight:600}
+        .nav-links{display:flex;gap:2px;list-style:none;margin-left:auto;flex-shrink:0}
+        .nav-links a{font-size:.86rem;font-weight:500;padding:.45rem .7rem;border-radius:var(--radius-pill);white-space:nowrap;transition:.2s;flex-shrink:0}
+        .nav-links a i{color:var(--gold-deep);margin-right:.25rem;font-size:.78rem}
+        .nav-links a:hover{color:var(--green-700);background:rgba(46,125,50,.08)}
+        .nav-links a.active{color:var(--green-700);background:rgba(46,125,50,.12);font-weight:600}
+        .user-menu{display:flex;align-items:center;gap:11px;margin-left:12px;padding-left:14px;border-left:1px solid var(--line);flex-shrink:0}
+        .user-avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:.78rem;font-weight:700;color:#fff;background:linear-gradient(150deg,var(--gold),var(--gold-deep));flex-shrink:0}
+        .user-name{font-size:.86rem;font-weight:600;color:var(--green-800);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+        .logout-btn{border:1.5px solid rgba(156,74,46,.4);background:none;color:var(--brick);font-family:inherit;font-size:.78rem;font-weight:600;padding:.42rem .85rem;border-radius:var(--radius-pill);cursor:pointer;transition:.2s;white-space:nowrap}
+        .logout-btn:hover{background:var(--brick);color:#fff}
+        .mobile-menu-btn{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;margin-left:auto}
+        .mobile-menu-btn span{width:24px;height:2.5px;background:var(--green-800);border-radius:2px}
+        .mobile-nav{display:none;flex-direction:column;background:#fff;border-bottom:1px solid var(--line);box-shadow:var(--shadow)}
+        .mobile-nav.active{display:flex}
+        .mobile-nav a{padding:.9rem 24px;border-bottom:1px solid var(--paper-2);font-size:.94rem;font-weight:500;display:flex;align-items:center;gap:.7rem}
+        .mobile-nav a i{color:var(--gold-deep);width:20px;text-align:center}
+        .mobile-nav a.active{color:var(--green-700);background:rgba(46,125,50,.06);font-weight:600}
+
+        /* HERO */
+        .hero{background:radial-gradient(800px 400px at 85% 0%,rgba(199,154,59,.18),transparent 60%),linear-gradient(160deg,var(--green-700),var(--green-900));color:#fff}
+        .hero-content{max-width:var(--maxw);margin:0 auto;padding:42px 24px 38px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+        .hero h1{font-family:var(--fdisplay);font-weight:500;font-size:clamp(1.5rem,3vw,2.1rem);line-height:1.12;margin-bottom:.2rem}
+        .hero p{color:rgba(255,255,255,.8);font-size:.94rem}
+        .student-selector{font-family:inherit;font-size:.9rem;font-weight:600;padding:.6rem 1rem;border:1.5px solid rgba(230,201,118,.5);border-radius:var(--radius-pill);background:rgba(255,255,255,.12);color:#fff;cursor:pointer;min-width:200px}
+        .student-selector option{color:var(--ink)}
+
+        /* MAIN */
+        .main{max-width:var(--maxw);margin:0 auto;padding:30px 24px 60px}
+
+        /* STATS */
+        .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px}
+        .stat-card{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px;position:relative;overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .2s,box-shadow .2s}
+        .stat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+        .stat-card::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green-600),var(--gold))}
+        .stat-icon{width:46px;height:46px;flex-shrink:0;border-radius:13px;display:grid;place-items:center;font-size:1.1rem;color:var(--green-900);background:linear-gradient(150deg,var(--gold-soft),var(--gold))}
+        .stat-icon i{color:var(--green-900)!important}
+        .stat-value{font-family:var(--fdisplay);font-weight:600;font-size:1.3rem;color:var(--green-800);line-height:1.1}
+        .stat-label{font-size:.76rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+
+        /* GRILLES & CARTES */
+        .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+        .grid-3{display:grid;grid-template-columns:1.15fr 1fr;gap:18px}
+        .card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm)}
+        .card-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--paper-2)}
+        .card-header h3{font-family:var(--fdisplay);font-weight:600;font-size:1.05rem;color:var(--green-800);display:flex;align-items:center;gap:.5rem}
+        .card-header h3 i{color:var(--gold-deep)!important;font-size:.9rem}
+        .card-header a{font-size:.8rem;font-weight:600;color:var(--green-700)}
+        .card-header a:hover{text-decoration:underline}
+
+        /* BADGES */
+        .badge{font-size:.7rem;font-weight:700;letter-spacing:.04em;padding:.28rem .7rem;border-radius:var(--radius-pill)}
+        .badge-success{background:#e8f5e9;color:#166534}
+        .badge-danger{background:#fee2e2;color:#991b1b}
+        .badge-warning{background:#fef3c7;color:#92400e}
+        .badge{text-transform:capitalize}
+        .solde-amount.ok{color:var(--green-700)}
+        .solde-amount.ok i{font-size:1.5rem;vertical-align:-2px;margin-right:.3rem}
+        .solde-amount.due{color:var(--brick)}
+
+        /* PROFIL ÉLÈVE */
+        .student-profile{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+        .student-avatar{width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font-family:var(--fdisplay);font-weight:600;font-size:1.15rem;color:var(--gold-soft);background:radial-gradient(circle at 30% 25%,var(--green-600),var(--green-800));flex-shrink:0;overflow:hidden}
+        .student-avatar img{width:100%;height:100%;object-fit:cover}
+        .student-name{font-family:var(--fdisplay);font-weight:600;font-size:1.15rem;color:var(--ink)}
+        .student-meta{font-size:.84rem;color:var(--muted)}
+        .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+        .info-item{background:var(--paper);border:1px solid var(--paper-2);border-radius:var(--radius-sm);padding:10px 12px}
+        .info-item label{display:block;font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:2px}
+        .info-item span{font-size:.88rem;font-weight:600;color:var(--ink)}
+
+        /* FINANCES */
+        .solde-display{text-align:center;padding:8px 0 4px}
+        .solde-amount{font-family:var(--fdisplay);font-weight:600;font-size:2rem;color:var(--green-700);line-height:1.1}
+        .solde-label{font-size:.82rem;color:var(--muted);margin:.3rem 0 .9rem}
+        .progress-bar{height:9px;background:var(--paper-2);border-radius:999px;overflow:hidden;margin-bottom:.5rem}
+        .progress-fill{height:100%;background:linear-gradient(90deg,var(--green-600),var(--gold));border-radius:999px;transition:width .5s ease}
+
+        /* LISTES paiements / absences */
+        .payment-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 2px;border-bottom:1px solid var(--paper-2);font-size:.9rem;flex-wrap:wrap}
+        .payment-row:last-child{border-bottom:none}
+        .payment-type{font-weight:600;color:var(--ink)}
+        .payment-date{font-size:.78rem;color:var(--muted)}
+        .payment-amount{font-weight:700;color:var(--green-700)}
+        .absence-item{display:flex;align-items:flex-start;gap:10px;padding:10px 2px;border-bottom:1px solid var(--paper-2)}
+        .absence-item:last-child{border-bottom:none}
+        .absence-dot{width:9px;height:9px;border-radius:50%;margin-top:6px;flex-shrink:0}
+        .absence-title{font-size:.9rem;font-weight:600;color:var(--ink)}
+        .absence-date{font-size:.78rem;color:var(--muted)}
+
+        /* LOADING */
+        .loading{text-align:center;padding:40px;color:var(--muted)}
+        .spin{animation:spin 1s linear infinite}
+        @keyframes spin{to{transform:rotate(360deg)}}
+
+        /* TOAST */
+        #toast{position:fixed;bottom:24px;right:24px;background:var(--green-900);color:#fff;padding:12px 20px;border-radius:12px;font-size:.9rem;font-weight:500;z-index:9999;display:none;box-shadow:var(--shadow)}
+
+        @media (max-width:1024px){.grid-3{grid-template-columns:1fr}}
+        @media (max-width:1280px){
+            .nav-links,.user-menu{display:none}
+            .mobile-menu-btn{display:flex}
+        }
+        @media (max-width:900px){
+            .grid-2{grid-template-columns:1fr}
+            .stats-grid{grid-template-columns:1fr 1fr}
+        }
+        @media (max-width:560px){
+            .stats-grid{grid-template-columns:1fr;gap:12px}
+            .nav-container{padding:.7rem 16px}
+            .hero-content{padding:30px 16px 26px;flex-direction:column;align-items:stretch}
+            .student-selector{width:100%;min-width:0}
+            .main{padding:22px 16px 48px}
+            .card{padding:16px}
+            .grid-2,.grid-3{gap:14px}
+            .stat-card{padding:15px}
+            .stat-value{font-size:1.15rem}
+            .solde-amount{font-size:1.7rem}
+            .info-grid{grid-template-columns:1fr}
+        }
+        @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-container">
+                <div class="logo-circle">EPMK</div>
+                <div class="logo-text"><div class="logo-main">Moussa Koné</div><div class="logo-sub">Portail Parents</div></div>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html"><i class="fas fa-home"></i> Accueil</a></li>
+                <li><a href="portal-dashboard.html" class="active"><i class="fas fa-gauge"></i> Tableau de bord</a></li>
+                <li><a href="portal-notes.html"><i class="fas fa-file-lines"></i> Notes & Bulletins</a></li>
+                <li><a href="portal-paiements.html"><i class="fas fa-money-bill-wave"></i> Paiements</a></li>
+                <li><a href="portal-absences.html"><i class="fas fa-calendar-check"></i> Absences</a></li>
+                <li><a href="portal-messagerie.html"><i class="fas fa-bullhorn"></i> Annonces</a></li>
+            </ul>
+            <div class="user-menu">
+                <div class="user-avatar" id="userAvatar" style="overflow:hidden;position:relative;"><img id="avatarImg" src="" alt="" style="width:100%;height:100%;object-fit:cover;display:none;border-radius:50%;"><span id="avatarInitials">PP</span></div>
+                <span class="user-name" id="userName">Chargement...</span>
+                <button class="logout-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn"><span></span><span></span><span></span></button>
+        </div>
+        <div class="mobile-nav" id="mobileNav">
+                <a href="../index.html"><i class="fas fa-home"></i> Accueil</a>
+                <a href="portal-dashboard.html" class="active"><i class="fas fa-gauge"></i> Tableau de bord</a>
+                <a href="portal-notes.html"><i class="fas fa-file-lines"></i> Notes & Bulletins</a>
+                <a href="portal-paiements.html"><i class="fas fa-money-bill-wave"></i> Paiements</a>
+                <a href="portal-absences.html"><i class="fas fa-calendar-check"></i> Absences</a>
+                <a href="portal-messagerie.html"><i class="fas fa-bullhorn"></i> Annonces</a>
+                <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+            </div>
+    </nav>
+</header>
+
+<div class="hero">
+    <div class="hero-content">
+        <div>
+            <h1 id="welcomeTitle">Bonjour !</h1>
+            <p id="welcomeSub">Suivi scolaire de votre enfant</p>
+        </div>
+        <select class="student-selector" id="studentSelect" onchange="switchStudent()" style="display:none;">
+        </select>
+    </div>
+</div>
+
+<div class="mud" aria-hidden="true"></div>
+
+<div class="main">
+    <div id="loadingMain" class="loading"><i class="fas fa-spinner spin" style="font-size:2rem;color:#795548;"></i><br><br>Chargement de vos informations...</div>
+    <div id="mainContent" style="display:none;">
+
+        <!-- Stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-graduation-cap"></i></div>
+                <div><div class="stat-value" id="statClasse">-</div><div class="stat-label">Classe</div></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-money-check-alt"></i></div>
+                <div><div class="stat-value" id="statPaye">-</div><div class="stat-label">Total payé</div></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-exclamation-circle"></i></div>
+                <div><div class="stat-value" id="statSolde">-</div><div class="stat-label">Solde dû</div></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i class="fas fa-user-clock"></i></div>
+                <div><div class="stat-value" id="statAbsences">-</div><div class="stat-label">Absences ce mois</div></div>
+            </div>
+        </div>
+
+        <!-- Row 1 -->
+        <div class="grid-3">
+            <!-- Profil élève -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-user-graduate" style="color:#5D4037;"></i> Profil de l'élève</h3>
+                    <span class="badge badge-success" id="studentStatus">actif</span>
+                </div>
+                <div class="student-profile">
+                    <div class="student-avatar" id="studentAvatarCard">-</div>
+                    <div>
+                        <div class="student-name" id="studentFullName">-</div>
+                        <div class="student-meta" id="studentClassInfo">-</div>
+                    </div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item"><label>Matricule</label><span id="infoMatricule">-</span></div>
+                    <div class="info-item"><label>Date naissance</label><span id="infoBirth">-</span></div>
+                    <div class="info-item"><label>Sexe</label><span id="infoGender">-</span></div>
+                    <div class="info-item"><label>Statut</label><span id="infoStatus">-</span></div>
+                </div>
+            </div>
+
+            <!-- Situation financière -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-wallet" style="color:#5D4037;"></i> Finances</h3>
+                    <a href="portal-paiements.html">Détails →</a>
+                </div>
+                <div class="solde-display">
+                    <div class="solde-amount" id="soldeAmount">-</div>
+                    <div class="solde-label" id="soldeLabel">Solde restant</div>
+                    <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+                    <div style="font-size:0.8rem;color:#9ca3af;" id="progressLabel">-</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="grid-2" style="margin-top:20px;">
+            <!-- Derniers paiements -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-receipt" style="color:#5D4037;"></i> Derniers paiements</h3>
+                    <a href="portal-paiements.html">Voir tout →</a>
+                </div>
+                <div id="recentPayments"><div class="loading"><i class="fas fa-spinner spin"></i></div></div>
+            </div>
+
+            <!-- Dernières absences -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-calendar-times" style="color:#5D4037;"></i> Présences récentes</h3>
+                    <a href="portal-absences.html">Voir tout →</a>
+                </div>
+                <div id="recentAbsences"><div class="loading"><i class="fas fa-spinner spin"></i></div></div>
+            </div>
+        </div>
+
+        <!-- Row 3 : Résultats + Annonce -->
+        <div class="grid-2" style="margin-top:20px;">
+            <!-- Résultats récents -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-chart-line" style="color:#5D4037;"></i> Résultats récents</h3>
+                    <a href="portal-notes.html">Voir les bulletins →</a>
+                </div>
+                <div id="recentNotes"><div class="loading"><i class="fas fa-spinner spin"></i></div></div>
+            </div>
+
+            <!-- Dernière annonce -->
+            <div class="card">
+                <div class="card-header">
+                    <h3><i class="fas fa-bullhorn" style="color:#5D4037;"></i> Dernière annonce</h3>
+                    <a href="portal-messagerie.html">Toutes →</a>
+                </div>
+                <div id="latestAnnonce"><div class="loading"><i class="fas fa-spinner spin"></i></div></div>
+            </div>
+        </div>
+
+        <!-- Résultat du DEF (affiché uniquement pour les élèves de 9ème) -->
+        <div id="defResultCard" style="display:none;margin-top:20px;"></div>
+
+        <!-- Emploi du temps de la classe -->
+        <div id="emploiCard" style="display:none;margin-top:20px;"></div>
+
+    </div><!-- /mainContent -->
+</div>
+
+<div id="toast"></div>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+<script src="../js/supabase-config.js"></script>
+<script src="../js/site-config.js"></script>
+<script>
+// ============================================================
+// PORTAL DASHBOARD — Entièrement dynamique
+// ============================================================
+
+let sb = null;
+let currentParent = null;
+let children = [];
+let currentStudent = null;
+
+// Cache : evite de re-signer la meme photo a chaque rendu de la page.
+const _cachePhotosPortail = {};
+
+/**
+ * Resout `students.photo_url` en une adresse affichable, en reconnaissant
+ * les DEUX formats : une ancienne URL complete (heritee du bucket qui
+ * etait public) renvoyee telle quelle, ou un CHEMIN dans le bucket prive
+ * `photos-eleves`, qui doit alors etre signe. Sans cette distinction, les
+ * photos ajoutees apres le passage au bucket prive renvoyaient un 404 —
+ * le chemin seul n'est jamais une adresse valide sur le web.
+ */
+async function urlPhotoPortail(valeur) {
+    if (!valeur) return null;
+    if (/^https?:\/\//i.test(valeur)) return valeur;   // ancien format : URL complete
+
+    const dejaVu = _cachePhotosPortail[valeur];
+    if (dejaVu && dejaVu.expire > Date.now()) return dejaVu.url;
+
+    try {
+        const { data, error } = await sb.storage
+            .from('photos-eleves').createSignedUrl(valeur, 3600);
+        if (error || !data?.signedUrl) return null;
+        _cachePhotosPortail[valeur] = { url: data.signedUrl, expire: Date.now() + 3300000 };
+        return data.signedUrl;
+    } catch (e) {
+        console.warn('Photo non signée :', e && e.message);
+        return null;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    await waitForSupabase();
+    sb = window.supabaseClient;
+    await checkAuth();
+});
+
+function waitForSupabase() {
+    return new Promise(resolve => {
+        if (window.supabaseClient) { resolve(); return; }
+        const interval = setInterval(() => {
+            if (window.supabaseClient) { clearInterval(interval); resolve(); }
+        }, 100);
+        setTimeout(() => { clearInterval(interval); resolve(); }, 5000);
+    });
+}
+
+async function checkAuth() {
+    try {
+        const { data: { session } } = await sb.auth.getSession();
+        if (!session) { window.location.href = 'portal-parents.html'; return; }
+        await loadParentData(session.user);
+    } catch(e) {
+        window.location.href = 'portal-parents.html';
+    }
+}
+
+async function loadParentData(user) {
+    try {
+        // Chercher le parent par email (correspond à l'email de connexion)
+        const { data: parent, error } = await sb
+            .from('parents')
+            .select('*')
+            .eq('email', user.email)
+            .single();
+
+        if (error || !parent) throw new Error('Profil parent non trouvé');
+
+        currentParent = parent;
+
+        // Afficher le nom du parent dans le header
+        const fullName = `${parent.first_name || ''} ${parent.last_name || ''}`.trim() || 'Parent';
+        const initials = ((parent.first_name||'')[0]||'') + ((parent.last_name||'')[0]||'');
+        document.getElementById('userName').textContent = fullName;
+        document.getElementById('avatarInitials').textContent = initials.toUpperCase() || 'PP';
+        // Photo élève dans l'avatar — signee si c'est un chemin (bucket prive).
+        if (children[0]?.photo_url) {
+            const adresse = await urlPhotoPortail(children[0].photo_url);
+            if (adresse) {
+                const img = document.getElementById('avatarImg');
+                img.src = adresse;
+                img.onload = () => { img.style.display='block'; document.getElementById('avatarInitials').style.display='none'; };
+            }
+        }
+        document.getElementById('welcomeTitle').textContent = `Bonjour, ${parent.first_name || fullName} !`;
+
+        // Charger les enfants liés à ce parent
+        await loadChildren(parent.id);
+
+    } catch(e) {
+        console.error('Erreur loadParentData:', e);
+        showToast('Erreur: ' + e.message, 'error');
+    }
+}
+
+async function loadChildren(parentId) {
+    try {
+        // Chercher via parent_students (table de liaison) si elle existe, sinon chercher directement
+        let studentIds = [];
+
+        try {
+            const { data: links } = await sb
+                .from('parent_students')
+                .select('student_id')
+                .eq('parent_id', parentId);
+            if (links && links.length > 0) {
+                studentIds = links.map(l => l.student_id);
+            }
+        } catch(e) {
+            // Table de liaison inexistante, chercher via father_email / mother_email
+        }
+
+        let students = [];
+
+        if (studentIds.length > 0) {
+            const { data } = await sb
+                .from('students_with_balance')
+                .select('*')
+                .in('id', studentIds);
+            students = data || [];
+        } else {
+            // Chercher par email père ou mère
+            const email = currentParent.email;
+            const { data } = await sb
+                .from('students_with_balance')
+                .select('*')
+                .or(`father_email.eq.${email},mother_email.eq.${email}`);
+            students = data || [];
+        }
+
+        if (!students || students.length === 0) {
+            document.getElementById('loadingMain').innerHTML = `
+                <div style="text-align:center;padding:60px;color:#6b7280;">
+                    <i class="fas fa-child" style="font-size:3rem;color:#d1d5db;"></i>
+                    <h3 style="margin:16px 0 8px;">Aucun élève lié à votre compte</h3>
+                    <p>Contactez l'administration pour lier vos enfants à votre compte.</p>
+                </div>`;
+            return;
+        }
+
+        // La vue students_with_balance n'expose pas photo_url → on complète depuis "students"
+        try {
+            const ids = students.map(s => s.id).filter(Boolean);
+            if (ids.length) {
+                const { data: photos } = await sb.from('students').select('id, photo_url').in('id', ids);
+                const pmap = {};
+                (photos || []).forEach(p => { pmap[p.id] = p.photo_url; });
+                students.forEach(s => { if (!s.photo_url && pmap[s.id]) s.photo_url = pmap[s.id]; });
+            }
+        } catch(_) {}
+
+        // Charger les classes
+        const classIds = [...new Set(students.map(s => s.class_id).filter(Boolean))];
+        let classesMap = {};
+        if (classIds.length > 0) {
+            const { data: classes } = await sb
+                .from('classes')
+                .select('id, nom, niveau, frais_inscription, frais_scolarite')
+                .in('id', classIds);
+            classes?.forEach(c => classesMap[c.id] = c);
+        }
+
+        children = students.map(s => ({ ...s, classe: classesMap[s.class_id] || null }));
+
+        // Sélecteur si plusieurs enfants
+        if (children.length > 1) {
+            const sel = document.getElementById('studentSelect');
+            sel.style.display = 'block';
+            sel.innerHTML = children.map((s, i) =>
+                // s.classe.nom, jamais s.class_name — jamais construit dans ce
+                // fichier (voir children ci-dessus, joint sous la cle "classe").
+                `<option value="${i}">${s.last_name} ${s.first_name} — ${s.classe?.nom || 'Classe inconnue'}</option>`
+            ).join('');
+        }
+
+        await renderDashboard(children[0]);
+
+    } catch(e) {
+        console.error('Erreur loadChildren:', e);
+        showToast('Erreur chargement des enfants: ' + e.message, 'error');
+    }
+}
+
+async function switchStudent() {
+    const idx = document.getElementById('studentSelect').value;
+    await renderDashboard(children[idx]);
+}
+
+async function renderDashboard(student) {
+    currentStudent = student;
+    document.getElementById('loadingMain').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+
+    const fullName = `${student.last_name || ''} ${student.first_name || ''}`.trim();
+    const initials = ((student.last_name||'')[0]||'') + ((student.first_name||'')[0]||'');
+    const className = student.class_name || student.classe?.nom || 'Non affecté';
+
+    document.getElementById('welcomeSub').textContent = `Suivi scolaire de ${student.first_name || fullName}`;
+
+    // Stats
+    document.getElementById('statClasse').textContent = className;
+
+    const totalPaye  = parseInt(student.total_paye  || 0);
+    const solde      = parseInt(student.solde        || 0);
+    const fraisTotal = parseInt((student.frais_inscription || 0)) + parseInt((student.frais_scolarite || 0));
+
+    document.getElementById('statPaye').textContent  = totalPaye.toLocaleString('fr-FR') + ' F';
+    document.getElementById('statSolde').textContent = solde > 0 ? solde.toLocaleString('fr-FR') + ' F' : 'À jour';
+
+    // Profil
+    const avatarCard = document.getElementById('studentAvatarCard');
+    if (student.photo_url) {
+        const adressePhoto = await urlPhotoPortail(student.photo_url);
+        if (adressePhoto) {
+            avatarCard.innerHTML = `<img src="${adressePhoto}" alt="Photo de ${fullName}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">`;
+        } else {
+            // Signature echouee (chemin invalide, politique refusee) :
+            // repli propre sur les initiales, jamais une image cassee.
+            avatarCard.textContent = initials.toUpperCase() || '?';
+        }
+    } else {
+        avatarCard.textContent = initials.toUpperCase() || '?';
+    }
+    document.getElementById('studentFullName').textContent   = fullName;
+    document.getElementById('studentClassInfo').textContent  = `${className} • ${student.gender === 'M' ? 'Garçon' : student.gender === 'F' ? 'Fille' : '-'}`;
+    document.getElementById('infoMatricule').textContent = student.matricule || '-';
+    document.getElementById('infoBirth').textContent     = student.birth_date ? new Date(student.birth_date).toLocaleDateString('fr-FR') : '-';
+    document.getElementById('infoGender').textContent    = student.gender === 'M' ? 'Masculin' : student.gender === 'F' ? 'Féminin' : '-';
+    document.getElementById('infoStatus').textContent    = student.status || 'actif';
+
+    const statusBadge = document.getElementById('studentStatus');
+    statusBadge.textContent = student.status || 'actif';
+    statusBadge.className = `badge badge-${student.status === 'actif' ? 'success' : 'warning'}`;
+
+    // Finances — un solde NEGATIF est un CREDIT reel (verse plus que ce
+    // qui etait du), distinct d'un solde exactement a zero : les deux ne
+    // doivent pas s'afficher de la meme facon sous le seul mot « Soldé ».
+    const soldeEl = document.getElementById('soldeAmount');
+    if (solde < 0) {
+        soldeEl.innerHTML = '<i class="fas fa-circle-check"></i>' + (-solde).toLocaleString('fr-FR') + ' FCFA';
+        soldeEl.className = 'solde-amount ok';
+        document.getElementById('soldeLabel').textContent = 'Crédit disponible (à valoir sur une prochaine échéance)';
+    } else if (solde === 0) {
+        soldeEl.innerHTML = '<i class="fas fa-circle-check"></i>Soldé';
+        soldeEl.className = 'solde-amount ok';
+        document.getElementById('soldeLabel').textContent = 'Tous les frais sont réglés';
+    } else {
+        soldeEl.textContent = solde.toLocaleString('fr-FR') + ' FCFA';
+        soldeEl.className = 'solde-amount due';
+        document.getElementById('soldeLabel').textContent = 'Reste à payer';
+    }
+    const pct = fraisTotal > 0 ? Math.min(100, Math.round((totalPaye / fraisTotal) * 100)) : 0;
+    document.getElementById('progressFill').style.width = pct + '%';
+    // Le total versé peut dépasser les frais obligatoires (cantine, tenues...) :
+    // on l'affiche proprement au lieu d'un ratio incohérent.
+    const progressEl = document.getElementById('progressLabel');
+    if (fraisTotal <= 0) {
+        progressEl.textContent = '';
+    } else if (totalPaye > fraisTotal) {
+        progressEl.textContent = `Frais obligatoires réglés (${fraisTotal.toLocaleString('fr-FR')} FCFA) • Total versé : ${totalPaye.toLocaleString('fr-FR')} FCFA (frais annexes inclus)`;
+    } else {
+        progressEl.textContent = `${pct}% des frais obligatoires réglés (${totalPaye.toLocaleString('fr-FR')} / ${fraisTotal.toLocaleString('fr-FR')} FCFA)`;
+    }
+
+    // Paiements récents
+    await loadRecentPayments(student.id);
+
+    // Absences récentes
+    await loadRecentAbsences(student.id);
+
+    // Résultats récents (notes) + dernière annonce
+    await loadRecentNotes(student);
+    await loadLatestAnnonce(student);
+    // Résultat du DEF (seulement si l'enfant est en 9ème année)
+    await loadDefResult(student);
+    // Emploi du temps de la classe de l'enfant
+    await loadEmploiDuTemps(student);
+}
+
+async function loadEmploiDuTemps(student) {
+    const host = document.getElementById('emploiCard');
+    if (!host) return;
+    const classId = student.class_id || student.classe?.id;
+    if (!classId) { host.style.display = 'none'; return; }
+
+    try {
+        const { data: cours, error } = await sb.from('emploi_du_temps')
+            .select('jour, heure_debut, heure_fin, salle, subject_id, teacher_id')
+            .eq('class_id', classId)
+            .order('heure_debut');
+        if (error) { console.warn('Emploi:', error.message); host.style.display = 'none'; return; }
+
+        const list = cours || [];
+        if (!list.length) { host.style.display = 'none'; return; }
+
+        // Charger noms matières/profs séparément (pas de jointure)
+        const subjIds = [...new Set(list.map(c => c.subject_id).filter(Boolean))];
+        const teachIds = [...new Set(list.map(c => c.teacher_id).filter(Boolean))];
+        const subjMap = {}, teachMap = {};
+        if (subjIds.length) {
+            const { data: s } = await sb.from('subjects').select('id, name').in('id', subjIds);
+            (s||[]).forEach(x => subjMap[x.id] = x.name);
+        }
+        if (teachIds.length) {
+            const { data: t } = await sb.from('teachers').select('id, first_name, last_name').in('id', teachIds);
+            (t||[]).forEach(x => teachMap[x.id] = `${x.last_name||''} ${x.first_name||''}`.trim());
+        }
+
+        const JOURS = { 1:'Lundi', 2:'Mardi', 3:'Mercredi', 4:'Jeudi', 5:'Vendredi', 6:'Samedi' };
+        const parJour = {1:[],2:[],3:[],4:[],5:[],6:[]};
+        list.forEach(c => { if (parJour[c.jour]) parJour[c.jour].push(c); });
+
+        // Construire des blocs par jour (responsive : empilés sur mobile, grille sur desktop)
+        let blocs = '';
+        for (let j = 1; j <= 6; j++) {
+            if (!parJour[j].length) continue;
+            const items = parJour[j].map(c => {
+                const prof = teachMap[c.teacher_id] || '';
+                return `<div style="background:#f0f9f1;border-left:3px solid #5D4037;border-radius:6px;padding:8px 10px;margin-bottom:6px;">
+                    <div style="font-weight:600;color:#5D4037;font-size:.82rem;">${(c.heure_debut||'').slice(0,5)} - ${(c.heure_fin||'').slice(0,5)}</div>
+                    <div style="color:#1f2937;font-weight:600;font-size:.9rem;">${subjMap[c.subject_id] || 'Matière'}</div>
+                    ${prof ? `<div style="color:#6b7280;font-size:.78rem;">${prof}</div>` : ''}
+                    ${c.salle ? `<div style="color:#9ca3af;font-size:.78rem;"><i class="fas fa-door-open"></i> ${c.salle}</div>` : ''}
+                </div>`;
+            }).join('');
+            blocs += `<div style="min-width:0;">
+                <div style="background:#5D4037;color:#fff;padding:6px 10px;border-radius:6px;text-align:center;font-weight:600;font-size:.84rem;margin-bottom:8px;">${JOURS[j]}</div>
+                ${items}
+            </div>`;
+        }
+
+        host.style.display = 'block';
+        host.innerHTML = `
+            <div class="card" style="background:#fff;border-radius:14px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.06);">
+                <h3 style="margin:0 0 14px;color:#5D4037;"><i class="fas fa-calendar-alt"></i> Emploi du temps de la classe</h3>
+                <div class="emploi-grid">${blocs}</div>
+            </div>
+            <style>
+                .emploi-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:14px; }
+                @media (max-width: 640px) { .emploi-grid { grid-template-columns:1fr; } }
+            </style>`;
+    } catch (e) {
+        console.warn('Emploi du temps:', e);
+        host.style.display = 'none';
+    }
+}
+
+async function loadDefResult(student) {
+    const host = document.getElementById('defResultCard');
+    if (!host) return;
+    const niveau = student.classe?.niveau || student.class_level;
+    if (niveau !== '9eme') { host.style.display = 'none'; return; }
+
+    try {
+        // Récupérer les infos DEF de l'élève
+        const { data: el, error } = await sb.from('students')
+            .select('def_numero, def_resultat, def_annee').eq('id', student.id).maybeSingle();
+        if (error) console.warn('DEF:', error.message);
+        const numero = el?.def_numero;
+        const resultat = el?.def_resultat;
+        const annee = el?.def_annee || new Date().getFullYear();
+
+        if (!numero && !resultat) {
+            // Pas encore inscrit au DEF
+            host.style.display = 'block';
+            host.innerHTML = `
+                <div style="background:#fff;border-radius:14px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.06);border-left:4px solid #6d28d9;">
+                    <h3 style="margin:0 0 8px;color:#6d28d9;"><i class="fas fa-landmark"></i> Diplôme d'Études Fondamentales (DEF)</h3>
+                    <p style="color:#6b7280;font-size:.9rem;margin:0;">Votre enfant est en 9ème année. Les informations du DEF (numéro de place et résultat) apparaîtront ici dès qu'elles seront enregistrées par l'établissement.</p>
+                </div>`;
+            return;
+        }
+
+        // Affichage du numéro + résultat (si disponible)
+        let resultBlock;
+        if (resultat === 'admis') {
+            resultBlock = `<div style="background:#d1fae5;color:#065f46;padding:14px;border-radius:10px;text-align:center;margin-top:12px;">
+                <div style="font-size:1.4rem;font-weight:700;"><i class="fas fa-circle-check"></i> ADMIS</div>
+                <div style="font-size:.85rem;margin-top:4px;">Félicitations ! Votre enfant peut poursuivre au lycée.</div>
+            </div>`;
+        } else if (resultat === 'non_admis') {
+            resultBlock = `<div style="background:#fef3c7;color:#92400e;padding:14px;border-radius:10px;text-align:center;margin-top:12px;">
+                <div style="font-size:1.4rem;font-weight:700;"><i class="fas fa-circle-info"></i> NON ADMIS</div>
+                <div style="font-size:.85rem;margin-top:4px;">Votre enfant pourra repasser l'examen l'année prochaine.</div>
+            </div>`;
+        } else {
+            resultBlock = `<div style="background:#eef2ff;color:#4338ca;padding:14px;border-radius:10px;text-align:center;margin-top:12px;">
+                <div style="font-weight:600;"><i class="fas fa-hourglass-half"></i> Résultat en attente</div>
+                <div style="font-size:.85rem;margin-top:4px;">Le résultat officiel n'est pas encore proclamé.</div>
+            </div>`;
+        }
+
+        host.style.display = 'block';
+        host.innerHTML = `
+            <div style="background:#fff;border-radius:14px;padding:20px;box-shadow:0 2px 8px rgba(0,0,0,.06);border-left:4px solid #6d28d9;">
+                <h3 style="margin:0 0 12px;color:#6d28d9;"><i class="fas fa-landmark"></i> Diplôme d'Études Fondamentales — Session ${annee}</h3>
+                <div style="display:flex;gap:14px;flex-wrap:wrap;">
+                    <div style="flex:1;min-width:160px;">
+                        <div style="font-size:.78rem;color:#9ca3af;">Numéro de place</div>
+                        <div style="font-size:1.2rem;font-weight:700;color:#1f2937;">${numero || '—'}</div>
+                    </div>
+                </div>
+                ${resultBlock}
+                <p style="font-size:.78rem;color:#9ca3af;margin:12px 0 0;">
+                    <i class="fas fa-info-circle"></i> Résultat enregistré par l'établissement. Le résultat officiel est consultable sur la plateforme du gouvernement avec le numéro de place.
+                </p>
+            </div>`;
+    } catch (e) {
+        console.warn('DEF:', e);
+        host.style.display = 'none';
+    }
+}
+
+async function loadRecentNotes(student) {
+    const container = document.getElementById('recentNotes');
+    if (!container) return;
+    try {
+        const { data: notes } = await sb
+            .from('notes')
+            .select('value, type, sequence, subjects(name)')
+            .eq('student_id', student.id)
+            .order('created_at', { ascending: false })
+            .limit(5);
+
+        if (!notes || notes.length === 0) {
+            container.innerHTML = '<p style="color:#9ca3af;text-align:center;padding:20px;">Aucune note disponible</p>';
+            return;
+        }
+        // Moyenne simple des notes affichées
+        const vals = notes.map(n => parseFloat(n.value)).filter(v => !isNaN(v));
+        const moy = vals.length ? (vals.reduce((a,b)=>a+b,0)/vals.length) : null;
+        const typeLbl = { examen:'Examen', devoir:'Devoir', participation:'Participation' };
+
+        let html = '';
+        if (moy != null) {
+            const col = moy >= 10 ? '#059669' : '#dc2626';
+            html += `<div style="text-align:center;margin-bottom:12px;">
+                <div style="font-size:1.8rem;font-weight:800;color:${col};">${moy.toFixed(2)}<span style="font-size:.9rem;color:#9ca3af;">/20</span></div>
+                <div style="font-size:.8rem;color:#6b7280;">Moyenne des dernières notes</div>
+            </div>`;
+        }
+        html += notes.map(n => {
+            const v = parseFloat(n.value);
+            const col = isNaN(v) ? '#9ca3af' : v >= 10 ? '#059669' : '#dc2626';
+            return `<div class="payment-row">
+                <div>
+                    <div class="payment-type">${n.subjects?.name || 'Matière'}</div>
+                    <div class="payment-date">${typeLbl[n.type] || n.type || ''}</div>
+                </div>
+                <div class="payment-amount" style="color:${col};">${isNaN(v) ? '-' : v.toFixed(2)+'/20'}</div>
+            </div>`;
+        }).join('');
+        container.innerHTML = html;
+    } catch(e) {
+        container.innerHTML = '<p style="color:#9ca3af;text-align:center;padding:20px;">Notes indisponibles</p>';
+    }
+}
+
+async function loadLatestAnnonce(student) {
+    const container = document.getElementById('latestAnnonce');
+    if (!container) return;
+    try {
+        const { data: annonces } = await sb
+            .from('annonces')
+            .select('*')
+            .eq('published', true)
+            .order('created_at', { ascending: false })
+            .limit(10);
+
+        // Filtrer : tous, ou la classe de l'élève, ou l'élève
+        const visible = (annonces || []).filter(a => {
+            if (a.cible === 'tous' || !a.cible) return true;
+            if (a.cible === 'classe') return a.class_id === student.class_id;
+            if (a.cible === 'eleve')  return a.student_id === student.id;
+            return false;
+        });
+
+        if (!visible.length) {
+            container.innerHTML = '<p style="color:#9ca3af;text-align:center;padding:20px;">Aucune annonce</p>';
+            return;
+        }
+        const cats = {
+            general:{c:'#3b82f6',b:'#dbeafe',i:'fa-info-circle',l:'Général'},
+            reunion:{c:'#7c3aed',b:'#ede9fe',i:'fa-users',l:'Réunion'},
+            evenement:{c:'#059669',b:'#d1fae5',i:'fa-calendar-day',l:'Événement'},
+            paiement:{c:'#b45309',b:'#fef3c7',i:'fa-money-bill',l:'Paiement'},
+            urgent:{c:'#dc2626',b:'#fee2e2',i:'fa-exclamation-triangle',l:'Urgent'}
+        };
+        const a = visible[0];
+        const cat = cats[a.categorie] || cats.general;
+        const date = new Date(a.created_at).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'});
+        container.innerHTML = `
+            <div style="border-left:4px solid ${cat.c};padding:4px 0 4px 12px;">
+                <span style="display:inline-block;background:${cat.b};color:${cat.c};padding:2px 10px;border-radius:999px;font-size:.72rem;font-weight:600;"><i class="fas ${cat.i}"></i> ${cat.l}</span>
+                <h4 style="margin:8px 0 4px;color:#1f2937;">${a.titre}</h4>
+                <p style="margin:0 0 6px;color:#4b5563;font-size:.9rem;white-space:pre-wrap;">${a.contenu.length > 160 ? a.contenu.slice(0,160)+'…' : a.contenu}</p>
+                <div style="font-size:.78rem;color:#9ca3af;"><i class="fas fa-clock"></i> ${date}</div>
+            </div>`;
+    } catch(e) {
+        container.innerHTML = '<p style="color:#9ca3af;text-align:center;padding:20px;">Annonces indisponibles</p>';
+    }
+}
+
+async function loadRecentPayments(studentId) {
+    const container = document.getElementById('recentPayments');
+    try {
+        const { data: payments } = await sb
+            .from('payments')
+            .select('*')
+            .eq('student_id', studentId)
+            .order('date', { ascending: false })
+            .limit(5);
+
+        const typeLabels = { inscription: 'Inscription', scolarite: 'Scolarité', cantine: 'Cantine', transport: 'Transport', uniforme: 'Uniforme' };
+
+        if (!payments || payments.length === 0) {
+            container.innerHTML = '<p style="color:#9ca3af;text-align:center;padding:20px;">Aucun paiement enregistré</p>';
+            return;
+        }
+        container.innerHTML = payments.map(p => `
+            <div class="payment-row">
+                <div>
+                    <div class="payment-type">${typeLabels[p.type] || p.type}</div>
+                    <div class="payment-date">${p.date ? new Date(p.date).toLocaleDateString('fr-FR') : '-'}</div>
+                </div>
+                <div class="payment-amount">+${parseInt(p.amount||0).toLocaleString('fr-FR')} FCFA</div>
+            </div>
+        `).join('');
+    } catch(e) {
+        container.innerHTML = '<p style="color:#ef4444;text-align:center;padding:20px;">Erreur de chargement</p>';
+    }
+}
+
+async function loadRecentAbsences(studentId) {
+    const container = document.getElementById('recentAbsences');
+    try {
+        // La table s'appelle `presences` (28 lignes en base), pas `attendances` :
+        // cette dernière n'existe pas. La requête échouait donc silencieusement,
+        // `(absences || [])` renvoyait un tableau vide, et le tableau de bord
+        // annonçait « 0 absence » à toutes les familles, y compris celles dont
+        // l'enfant en avait. portal-absences.html, lui, interroge la bonne table.
+        const { data: absences, error: errAbs } = await sb
+            .from('presences')
+            .select('*')
+            .eq('student_id', studentId)
+            .in('status', ['absent', 'retard', 'late'])
+            .order('date', { ascending: false })
+            .limit(5);
+        if (errAbs) console.warn('Absences non chargées :', errAbs.message);
+
+        // Compter les absences du mois en cours
+        const now = new Date();
+        const absMonth = (absences || []).filter(a => {
+            const d = new Date(a.date);
+            return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+        }).length;
+        document.getElementById('statAbsences').textContent = absMonth;
+
+        if (!absences || absences.length === 0) {
+            container.innerHTML = '<p style="color:#10b981;text-align:center;padding:20px;"><i class="fas fa-check-circle"></i> Aucune absence récente</p>';
+            return;
+        }
+        container.innerHTML = absences.map(a => `
+            <div class="absence-item">
+                <div class="absence-dot ${a.status === 'absent' ? 'absent' : 'retard'}"></div>
+                <div>
+                    <div class="absence-title">${a.status === 'absent' ? 'Absence' : 'Retard'} — ${a.subject || ''}</div>
+                    <div class="absence-date">${a.date ? new Date(a.date).toLocaleDateString('fr-FR') : '-'}</div>
+                </div>
+            </div>
+        `).join('');
+    } catch(e) {
+        console.warn('Absences :', e?.message);
+        document.getElementById('statAbsences').textContent = '-';
+        container.innerHTML = '<p style="color:#9ca3af;text-align:center;padding:20px;">Données non disponibles</p>';
+    }
+}
+
+async function logout() {
+    try {
+        const { data: { user } } = await sb.auth.getUser();
+        if (user) await sb.from('journal_connexions').insert([{ user_id: user.id, email: user.email, role: 'parent', action: 'deconnexion', user_agent: navigator.userAgent }]);
+    } catch (_) {}
+
+    await sb.auth.signOut();
+    window.location.href = 'portal-parents.html';
+}
+
+function showToast(msg, type = 'info') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.background = type === 'error' ? '#ef4444' : type === 'success' ? '#10b981' : '#1f2937';
+    t.style.display = 'block';
+    setTimeout(() => { t.style.display = 'none'; }, 3000);
+}
+
+
+        /* Menu mobile commun */
+        (function(){
+          var b=document.getElementById('mobileMenuBtn'), n=document.getElementById('mobileNav');
+          if(b&&n){ b.addEventListener('click',function(){ n.classList.toggle('active'); b.classList.toggle('open'); }); }
+        })();
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Espaces privés : ne pas indexer
+Disallow: /pages/Admin.html
+Disallow: /pages/Login.html
+Disallow: /pages/portal-
+Disallow: /js/
+
+Sitemap: https://epmk.netlify.app/sitemap.xml
